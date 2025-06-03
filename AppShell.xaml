@@ -4,12 +4,126 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:LocalDropApp"
-    Shell.FlyoutBehavior="Disabled"
+    xmlns:views="clr-namespace:LocalDropApp.Views"
+    Shell.FlyoutBehavior="Flyout"
+    Shell.FlyoutWidth="280"
+    Shell.FlyoutBackgroundColor="{StaticResource DarkNavy}"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False"
     Title="LocalDropApp">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <!-- Flyout Header -->
+    <Shell.FlyoutHeader>
+        <Grid BackgroundColor="{StaticResource DarkNavy}" 
+              Padding="24,40,24,24" 
+              RowDefinitions="Auto,Auto,Auto">
+            
+            <!-- App Icon/Logo -->
+            <Border Grid.Row="0"
+                    BackgroundColor="{StaticResource Primary}"
+                    WidthRequest="56"
+                    HeightRequest="56"
+                    StrokeShape="RoundRectangle 12"
+                    HorizontalOptions="Start">
+                <Label Text="📡" 
+                       FontSize="24" 
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center"
+                       TextColor="White" />
+            </Border>
+            
+            <!-- App Title -->
+            <Label Grid.Row="1" 
+                   Text="Local Drop" 
+                   FontSize="22" 
+                   FontAttributes="Bold" 
+                   TextColor="{StaticResource TextOnDark}" 
+                   Margin="0,16,0,4" />
+            
+            <!-- App Subtitle -->
+            <Label Grid.Row="2" 
+                   Text="File Transfer Made Simple" 
+                   FontSize="14" 
+                   TextColor="{StaticResource TextOnDarkSecondary}" />
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <!-- Flyout Items -->
+    <FlyoutItem Title="Dashboard" 
+                Icon="home.png"
+                Route="dashboard">
+        <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Transfer History" 
+                Icon="clock.png"
+                Route="history">
+        <ShellContent ContentTemplate="{DataTemplate views:HistoryPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Settings" 
+                Icon="settings.png"
+                Route="settings">
+        <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" />
+    </FlyoutItem>
+
+    <!-- Flyout Footer -->
+    <Shell.FlyoutFooter>
+        <Grid BackgroundColor="{StaticResource DarkNavy}" 
+              Padding="24,16,24,32"
+              RowDefinitions="Auto,Auto"
+              RowSpacing="12">
+            
+            <!-- Connection Status -->
+            <Border Grid.Row="0"
+                    BackgroundColor="{StaticResource DarkNavyLight}"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="16,12">
+                <Grid ColumnDefinitions="Auto,*">
+                    <Ellipse Grid.Column="0"
+                             Fill="{StaticResource Success}"
+                             WidthRequest="8"
+                             HeightRequest="8"
+                             VerticalOptions="Center" />
+                    <Label Grid.Column="1"
+                           Text="Connected"
+                           FontSize="12"
+                           TextColor="{StaticResource TextOnDarkSecondary}"
+                           Margin="8,0,0,0"
+                           VerticalOptions="Center" />
+                </Grid>
+            </Border>
+            
+            <!-- Theme Toggle -->
+            <Button Grid.Row="1"
+                    x:Name="ThemeToggleButton"
+                    Text="🌙 Dark Mode"
+                    Clicked="OnThemeToggleClicked"
+                    BackgroundColor="{StaticResource DarkNavyLight}"
+                    TextColor="{StaticResource TextOnDark}"
+                    CornerRadius="8"
+                    FontSize="14"
+                    Padding="16,12"
+                    BorderWidth="0" />
+        </Grid>
+    </Shell.FlyoutFooter>
+
+    <!-- Custom Flyout Item Style -->
+    <Shell.Resources>
+        <Style TargetType="Shell">
+            <Setter Property="Shell.FlyoutBackgroundColor" Value="{StaticResource DarkNavy}" />
+        </Style>
+        
+        <Style TargetType="FlyoutItem" ApplyToDerivedTypes="True">
+            <Setter Property="Shell.BackgroundColor" Value="{StaticResource DarkNavy}" />
+            <Setter Property="Shell.ForegroundColor" Value="{StaticResource TextOnDarkSecondary}" />
+            <Setter Property="Shell.TitleColor" Value="{StaticResource TextOnDarkSecondary}" />
+            <Setter Property="Shell.UnselectedColor" Value="{StaticResource TextOnDarkSecondary}" />
+            <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource DarkNavy}" />
+            <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource TextOnDark}" />
+            <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource TextOnDark}" />
+            <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource TextOnDarkSecondary}" />
+        </Style>
+    </Shell.Resources>
 
 </Shell>

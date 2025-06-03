@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:LocalDropApp.ViewModels"
+             xmlns:models="clr-namespace:LocalDropApp.Models"
+             x:Class="LocalDropApp.Views.SettingsPage"
+             Title="Settings"
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
+
+    <ScrollView Padding="24">
+        <StackLayout Spacing="20">
+            
+            <!-- General Settings -->
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="0"
+                    Padding="0">
+                <Border.Shadow>
+                    <Shadow Brush="{StaticResource Gray300}"
+                            Offset="0,2"
+                            Radius="8"
+                            Opacity="0.1" />
+                </Border.Shadow>
+                
+                <Grid Padding="24,20" RowDefinitions="Auto,Auto" RowSpacing="16">
+                    <Label Grid.Row="0"
+                           Text="🔧 General Settings" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                    
+                    <StackLayout Grid.Row="1" Spacing="16">
+                        
+                        <!-- Device Name -->
+                        <Grid ColumnDefinitions="*,2*" ColumnSpacing="16" RowDefinitions="Auto,Auto">
+                            <Label Grid.Column="0" Grid.Row="0"
+                                   Text="Device Name" 
+                                   FontSize="14" 
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="0" Grid.Row="1"
+                                   Text="Name displayed to other devices" 
+                                   FontSize="12" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            
+                            <Border Grid.Column="1" Grid.RowSpan="2"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                                    StrokeShape="RoundRectangle 8"
+                                    Padding="12,8"
+                                    VerticalOptions="Start">
+                                <Entry Text="{Binding Settings.DeviceName}"
+                                       BackgroundColor="Transparent"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                       FontSize="14" />
+                            </Border>
+                        </Grid>
+                        
+                        <!-- Download Path -->
+                        <Grid ColumnDefinitions="*,2*" ColumnSpacing="16" RowDefinitions="Auto,Auto">
+                            <Label Grid.Column="0" Grid.Row="0"
+                                   Text="Download Path" 
+                                   FontSize="14" 
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="0" Grid.Row="1"
+                                   Text="Where received files are saved" 
+                                   FontSize="12" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            
+                            <Grid Grid.Column="1" Grid.RowSpan="2" ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                <Border Grid.Column="0"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="12,8">
+                                    <Entry Text="{Binding Settings.DownloadPath}"
+                                           BackgroundColor="Transparent"
+                                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                           FontSize="14"
+                                           IsReadOnly="True" />
+                                </Border>
+                                <Button Grid.Column="1"
+                                        Text="📁"
+                                        Command="{Binding BrowseFolderCommand}"
+                                        BackgroundColor="{StaticResource Primary}"
+                                        TextColor="White"
+                                        CornerRadius="8"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        FontSize="16"
+                                        Padding="0" />
+                            </Grid>
+                        </Grid>
+                        
+                        <!-- Theme -->
+                        <Grid ColumnDefinitions="*,2*" ColumnSpacing="16" RowDefinitions="Auto,Auto">
+                            <Label Grid.Column="0" Grid.Row="0"
+                                   Text="App Theme" 
+                                   FontSize="14" 
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="0" Grid.Row="1"
+                                   Text="Light, dark, or system default" 
+                                   FontSize="12" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            
+                            <Border Grid.Column="1" Grid.RowSpan="2"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                                    StrokeShape="RoundRectangle 8"
+                                    Padding="12,8"
+                                    VerticalOptions="Start">
+                                <Picker ItemsSource="{Binding ThemeOptions}"
+                                        SelectedItem="{Binding Settings.ThemeDisplayText}"
+                                        BackgroundColor="Transparent"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                        FontSize="14" />
+                            </Border>
+                        </Grid>
+                    </StackLayout>
+                </Grid>
+            </Border>
+
+            <!-- Network Settings -->
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="0"
+                    Padding="0">
+                <Border.Shadow>
+                    <Shadow Brush="{StaticResource Gray300}"
+                            Offset="0,2"
+                            Radius="8"
+                            Opacity="0.1" />
+                </Border.Shadow>
+                
+                <Grid Padding="24,20" RowDefinitions="Auto,Auto" RowSpacing="16">
+                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0"
+                               Text="🌐 Network Settings" 
+                               FontSize="18" 
+                               FontAttributes="Bold" 
+                               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                        <Button Grid.Column="1"
+                                Text="🔍 Test"
+                                Command="{Binding TestConnectionCommand}"
+                                BackgroundColor="{StaticResource Primary}"
+                                TextColor="White"
+                                CornerRadius="8"
+                                Padding="12,6"
+                                FontSize="12">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsLoading}" Value="True">
+                                    <Setter Property="Text" Value="⏳ Testing..." />
+                                    <Setter Property="IsEnabled" Value="False" />
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Gray400}" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                    </Grid>
+                    
+                    <StackLayout Grid.Row="1" Spacing="16">
+                        
+                        <!-- Discovery Port -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="16" RowDefinitions="Auto,Auto">
+                            <Label Grid.Column="0" Grid.Row="0"
+                                   Text="Discovery Port" 
+                                   FontSize="14" 
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="0" Grid.Row="1"
+                                   Text="Port for device discovery" 
+                                   FontSize="12" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            
+                            <Border Grid.Column="1" Grid.RowSpan="2"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                                    StrokeShape="RoundRectangle 8"
+                                    Padding="12,8"
+                                    VerticalOptions="Start">
+                                <Entry Text="{Binding Settings.DiscoveryPort}"
+                                       BackgroundColor="Transparent"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                       FontSize="14"
+                                       Keyboard="Numeric" />
+                            </Border>
+                        </Grid>
+                        
+                        <!-- Transfer Port -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="16" RowDefinitions="Auto,Auto">
+                            <Label Grid.Column="0" Grid.Row="0"
+                                   Text="Transfer Port" 
+                                   FontSize="14" 
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="0" Grid.Row="1"
+                                   Text="Port for file transfers" 
+                                   FontSize="12" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            
+                            <Border Grid.Column="1" Grid.RowSpan="2"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                                    StrokeShape="RoundRectangle 8"
+                                    Padding="12,8"
+                                    VerticalOptions="Start">
+                                <Entry Text="{Binding Settings.TransferPort}"
+                                       BackgroundColor="Transparent"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                       FontSize="14"
+                                       Keyboard="Numeric" />
+                            </Border>
+                        </Grid>
+                        
+                        <!-- Discovery Timeout -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="16" RowDefinitions="Auto,Auto">
+                            <Label Grid.Column="0" Grid.Row="0"
+                                   Text="Discovery Timeout" 
+                                   FontSize="14" 
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="0" Grid.Row="1"
+                                   Text="How long to search for devices" 
+                                   FontSize="12" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            
+                            <Border Grid.Column="1" Grid.RowSpan="2"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                                    StrokeShape="RoundRectangle 8"
+                                    Padding="12,8"
+                                    VerticalOptions="Start">
+                                <Picker ItemsSource="{Binding TimeoutOptions}"
+                                        SelectedItem="{Binding Settings.DiscoveryTimeout}"
+                                        BackgroundColor="Transparent"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                        FontSize="14" />
+                            </Border>
+                        </Grid>
+                    </StackLayout>
+                </Grid>
+            </Border>
+
+            <!-- Transfer Settings -->
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="0"
+                    Padding="0">
+                <Border.Shadow>
+                    <Shadow Brush="{StaticResource Gray300}"
+                            Offset="0,2"
+                            Radius="8"
+                            Opacity="0.1" />
+                </Border.Shadow>
+                
+                <Grid Padding="24,20" RowDefinitions="Auto,Auto" RowSpacing="16">
+                    <Label Grid.Row="0"
+                           Text="📁 Transfer Settings" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                    
+                    <StackLayout Grid.Row="1" Spacing="16">
+                        
+                        <!-- Auto Accept Transfers -->
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                            <StackLayout Grid.Column="0" VerticalOptions="Center">
+                                <Label Text="Auto Accept Transfers" 
+                                       FontSize="14" 
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                <Label Text="Automatically accept incoming file transfers" 
+                                       FontSize="12" 
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            </StackLayout>
+                            <Switch Grid.Column="1"
+                                    IsToggled="{Binding Settings.AutoAcceptTransfers}"
+                                    VerticalOptions="Center" />
+                        </Grid>
+                        
+                        <!-- Require Confirmation -->
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                            <StackLayout Grid.Column="0" VerticalOptions="Center">
+                                <Label Text="Require Confirmation" 
+                                       FontSize="14" 
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                <Label Text="Ask before sending files to other devices" 
+                                       FontSize="12" 
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            </StackLayout>
+                            <Switch Grid.Column="1"
+                                    IsToggled="{Binding Settings.RequireConfirmation}"
+                                    VerticalOptions="Center" />
+                        </Grid>
+                        
+                        <!-- Max Concurrent Transfers -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="16" RowDefinitions="Auto,Auto">
+                            <Label Grid.Column="0" Grid.Row="0"
+                                   Text="Max Concurrent Transfers" 
+                                   FontSize="14" 
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="0" Grid.Row="1"
+                                   Text="Maximum simultaneous transfers" 
+                                   FontSize="12" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            
+                            <Border Grid.Column="1" Grid.RowSpan="2"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                                    StrokeShape="RoundRectangle 8"
+                                    Padding="12,8"
+                                    VerticalOptions="Start">
+                                <Picker ItemsSource="{Binding ConcurrentTransferOptions}"
+                                        SelectedItem="{Binding Settings.MaxConcurrentTransfers}"
+                                        BackgroundColor="Transparent"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                        FontSize="14" />
+                            </Border>
+                        </Grid>
+                        
+                        <!-- Max File Size -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="16" RowDefinitions="Auto,Auto">
+                            <Label Grid.Column="0" Grid.Row="0"
+                                   Text="Max File Size" 
+                                   FontSize="14" 
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="0" Grid.Row="1"
+                                   Text="Maximum size per file (MB)" 
+                                   FontSize="12" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            
+                            <Border Grid.Column="1" Grid.RowSpan="2"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                                    StrokeShape="RoundRectangle 8"
+                                    Padding="12,8"
+                                    VerticalOptions="Start">
+                                <Picker ItemsSource="{Binding MaxFileSizeOptions}"
+                                        SelectedItem="{Binding Settings.MaxFileSize}"
+                                        BackgroundColor="Transparent"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                        FontSize="14" />
+                            </Border>
+                        </Grid>
+                    </StackLayout>
+                </Grid>
+            </Border>
+
+            <!-- Security Settings -->
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="0"
+                    Padding="0">
+                <Border.Shadow>
+                    <Shadow Brush="{StaticResource Gray300}"
+                            Offset="0,2"
+                            Radius="8"
+                            Opacity="0.1" />
+                </Border.Shadow>
+                
+                <Grid Padding="24,20" RowDefinitions="Auto,Auto" RowSpacing="16">
+                    <Label Grid.Row="0"
+                           Text="🔒 Security &amp; Privacy" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                    
+                    <StackLayout Grid.Row="1" Spacing="16">
+                        
+                        <!-- Encrypt Transfers -->
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                            <StackLayout Grid.Column="0" VerticalOptions="Center">
+                                <Label Text="Encrypt Transfers" 
+                                       FontSize="14" 
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                <Label Text="Encrypt files during transfer" 
+                                       FontSize="12" 
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            </StackLayout>
+                            <Switch Grid.Column="1"
+                                    IsToggled="{Binding Settings.EncryptTransfers}"
+                                    VerticalOptions="Center" />
+                        </Grid>
+                        
+                        <!-- Compress Files -->
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                            <StackLayout Grid.Column="0" VerticalOptions="Center">
+                                <Label Text="Compress Files" 
+                                       FontSize="14" 
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                <Label Text="Compress files to reduce transfer time" 
+                                       FontSize="12" 
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            </StackLayout>
+                            <Switch Grid.Column="1"
+                                    IsToggled="{Binding Settings.CompressFiles}"
+                                    VerticalOptions="Center" />
+                        </Grid>
+                        
+                        <!-- Compression Level -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="16" RowDefinitions="Auto,Auto"
+                              IsVisible="{Binding Settings.CompressFiles}">
+                            <Label Grid.Column="0" Grid.Row="0"
+                                   Text="Compression Level" 
+                                   FontSize="14" 
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="0" Grid.Row="1"
+                                   Text="Higher = smaller files, slower" 
+                                   FontSize="12" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            
+                            <Border Grid.Column="1" Grid.RowSpan="2"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                                    StrokeShape="RoundRectangle 8"
+                                    Padding="12,8"
+                                    VerticalOptions="Start">
+                                <Picker ItemsSource="{Binding CompressionLevels}"
+                                        SelectedItem="{Binding Settings.CompressionLevel}"
+                                        BackgroundColor="Transparent"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                        FontSize="14" />
+                            </Border>
+                        </Grid>
+                    </StackLayout>
+                </Grid>
+            </Border>
+
+            <!-- Notifications &amp; History -->
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="0"
+                    Padding="0">
+                <Border.Shadow>
+                    <Shadow Brush="{StaticResource Gray300}"
+                            Offset="0,2"
+                            Radius="8"
+                            Opacity="0.1" />
+                </Border.Shadow>
+                
+                <Grid Padding="24,20" RowDefinitions="Auto,Auto" RowSpacing="16">
+                    <Label Grid.Row="0"
+                           Text="🔔 Notifications &amp; History" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                    
+                    <StackLayout Grid.Row="1" Spacing="16">
+                        
+                        <!-- Show Notifications -->
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                            <StackLayout Grid.Column="0" VerticalOptions="Center">
+                                <Label Text="Show Notifications" 
+                                       FontSize="14" 
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                <Label Text="Get notified about transfer events" 
+                                       FontSize="12" 
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            </StackLayout>
+                            <Switch Grid.Column="1"
+                                    IsToggled="{Binding Settings.ShowNotifications}"
+                                    VerticalOptions="Center" />
+                        </Grid>
+                        
+                        <!-- Enable File Logging -->
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                            <StackLayout Grid.Column="0" VerticalOptions="Center">
+                                <Label Text="Enable File Logging" 
+                                       FontSize="14" 
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                <Label Text="Keep detailed logs of file transfers" 
+                                       FontSize="12" 
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            </StackLayout>
+                            <Switch Grid.Column="1"
+                                    IsToggled="{Binding Settings.EnableFileLogging}"
+                                    VerticalOptions="Center" />
+                        </Grid>
+                        
+                        <!-- Keep History Days -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="16" RowDefinitions="Auto,Auto">
+                            <Label Grid.Column="0" Grid.Row="0"
+                                   Text="Keep History" 
+                                   FontSize="14" 
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="0" Grid.Row="1"
+                                   Text="{Binding Settings.KeepHistoryDescription}" 
+                                   FontSize="12" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            
+                            <Border Grid.Column="1" Grid.RowSpan="2"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                                    StrokeShape="RoundRectangle 8"
+                                    Padding="12,8"
+                                    VerticalOptions="Start">
+                                <Picker ItemsSource="{Binding HistoryRetentionOptions}"
+                                        SelectedItem="{Binding Settings.KeepHistoryDays}"
+                                        BackgroundColor="Transparent"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                        FontSize="14" />
+                            </Border>
+                        </Grid>
+                        
+                        <!-- Auto Start -->
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                            <StackLayout Grid.Column="0" VerticalOptions="Center">
+                                <Label Text="Start with System" 
+                                       FontSize="14" 
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                <Label Text="Launch automatically when system starts" 
+                                       FontSize="12" 
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            </StackLayout>
+                            <Switch Grid.Column="1"
+                                    IsToggled="{Binding Settings.AutoStart}"
+                                    VerticalOptions="Center" />
+                        </Grid>
+                    </StackLayout>
+                </Grid>
+            </Border>
+
+            <!-- Action Buttons -->
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
+                <Button Grid.Column="0"
+                        Text="💾 Save"
+                        Command="{Binding SaveSettingsCommand}"
+                        BackgroundColor="{StaticResource Success}"
+                        TextColor="White"
+                        CornerRadius="12"
+                        Padding="0,16"
+                        FontSize="16"
+                        FontAttributes="Bold">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsLoading}" Value="True">
+                            <Setter Property="Text" Value="💾 Saving..." />
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Setter Property="BackgroundColor" Value="{StaticResource Gray400}" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Button" Binding="{Binding HasUnsavedChanges}" Value="False">
+                            <Setter Property="BackgroundColor" Value="{StaticResource Gray400}" />
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                
+                <Button Grid.Column="1"
+                        Text="🔄 Reset"
+                        Command="{Binding ResetSettingsCommand}"
+                        BackgroundColor="{StaticResource Warning}"
+                        TextColor="White"
+                        CornerRadius="12"
+                        Padding="0,16"
+                        FontSize="16"
+                        FontAttributes="Bold" />
+                
+                <Button Grid.Column="2"
+                        Text="🧹 Clear Cache"
+                        Command="{Binding ClearCacheCommand}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                        CornerRadius="12"
+                        Padding="0,16"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        BorderColor="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                        BorderWidth="1" />
+            </Grid>
+
+            <!-- Import/Export Buttons -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button Grid.Column="0"
+                        Text="📤 Export Settings"
+                        Command="{Binding ExportSettingsCommand}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                        CornerRadius="12"
+                        Padding="0,12"
+                        FontSize="14"
+                        BorderColor="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                        BorderWidth="1" />
+                
+                <Button Grid.Column="1"
+                        Text="📥 Import Settings"
+                        Command="{Binding ImportSettingsCommand}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                        CornerRadius="12"
+                        Padding="0,12"
+                        FontSize="14"
+                        BorderColor="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                        BorderWidth="1" />
+            </Grid>
+        </StackLayout>
+    </ScrollView>
+</ContentPage> 

@@ -14,6 +14,8 @@
             <!-- Value Converters -->
             <converters:PercentageConverter x:Key="PercentageConverter" />
             <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
+            <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+            <converters:EqualConverter x:Key="EqualConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

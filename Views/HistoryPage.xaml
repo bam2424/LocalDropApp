@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:LocalDropApp.ViewModels"
+             xmlns:models="clr-namespace:LocalDropApp.Models"
+             x:Class="LocalDropApp.Views.HistoryPage"
+             Title="Transfer History"
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
+
+    <Grid RowDefinitions="Auto,Auto,*" Margin="24" RowSpacing="20">
+        
+        <!-- Statistics Section -->
+        <Border Grid.Row="0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                StrokeShape="RoundRectangle 16"
+                StrokeThickness="0"
+                Padding="0">
+            <Border.Shadow>
+                <Shadow Brush="{StaticResource Gray300}"
+                        Offset="0,2"
+                        Radius="8"
+                        Opacity="0.1" />
+            </Border.Shadow>
+            
+            <Grid Padding="24,20" RowDefinitions="Auto,Auto" RowSpacing="16">
+                <Label Grid.Row="0"
+                       Text="Transfer Statistics" 
+                       FontSize="18" 
+                       FontAttributes="Bold" 
+                       TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                
+                <Grid Grid.Row="1" ColumnDefinitions="*,*,*,*" ColumnSpacing="12">
+                    
+                    <!-- Total Transfers -->
+                    <Border Grid.Column="0"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="16,12">
+                        <StackLayout Spacing="4">
+                            <Label Text="📊" FontSize="20" HorizontalOptions="Center" />
+                            <Label Text="{Binding TotalTransfers}" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" 
+                                   HorizontalOptions="Center" />
+                            <Label Text="Total" 
+                                   FontSize="12" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" 
+                                   HorizontalOptions="Center" />
+                        </StackLayout>
+                    </Border>
+                    
+                    <!-- Data Transferred -->
+                    <Border Grid.Column="1"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="16,12">
+                        <StackLayout Spacing="4">
+                            <Label Text="💾" FontSize="20" HorizontalOptions="Center" />
+                            <Label Text="{Binding TotalDataTransferredFormatted}" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" 
+                                   HorizontalOptions="Center" />
+                            <Label Text="Data" 
+                                   FontSize="12" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" 
+                                   HorizontalOptions="Center" />
+                        </StackLayout>
+                    </Border>
+                    
+                    <!-- Success Rate -->
+                    <Border Grid.Column="2"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="16,12">
+                        <StackLayout Spacing="4">
+                            <Label Text="✅" FontSize="20" HorizontalOptions="Center" />
+                            <Label Text="{Binding SuccessRate}" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   TextColor="{StaticResource Success}" 
+                                   HorizontalOptions="Center" />
+                            <Label Text="Success" 
+                                   FontSize="12" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" 
+                                   HorizontalOptions="Center" />
+                        </StackLayout>
+                    </Border>
+                    
+                    <!-- Failed Transfers -->
+                    <Border Grid.Column="3"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="16,12">
+                        <StackLayout Spacing="4">
+                            <Label Text="❌" FontSize="20" HorizontalOptions="Center" />
+                            <Label Text="{Binding FailedTransfers}" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   TextColor="{StaticResource Error}" 
+                                   HorizontalOptions="Center" />
+                            <Label Text="Failed" 
+                                   FontSize="12" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" 
+                                   HorizontalOptions="Center" />
+                        </StackLayout>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <!-- Search and Filter Section -->
+        <Border Grid.Row="1"
+                BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                StrokeShape="RoundRectangle 16"
+                StrokeThickness="0"
+                Padding="0">
+            <Border.Shadow>
+                <Shadow Brush="{StaticResource Gray300}"
+                        Offset="0,2"
+                        Radius="8"
+                        Opacity="0.1" />
+            </Border.Shadow>
+            
+            <Grid Padding="24,20" RowDefinitions="Auto,Auto" RowSpacing="16">
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12">
+                    
+                    <!-- Search Bar -->
+                    <Border Grid.Column="0"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="16,8">
+                        <Entry Text="{Binding SearchText}"
+                               Placeholder="Search files or devices..."
+                               BackgroundColor="Transparent"
+                               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                               PlaceholderColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextTertiaryDark}}"
+                               FontSize="14" />
+                    </Border>
+                    
+                    <!-- Filter Picker -->
+                    <Border Grid.Column="1"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="16,8">
+                        <Picker ItemsSource="{Binding FilterOptions}"
+                                SelectedItem="{Binding SelectedFilter}"
+                                BackgroundColor="Transparent"
+                                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                FontSize="14"
+                                WidthRequest="120" />
+                    </Border>
+                    
+                    <!-- Refresh Button -->
+                    <Button Grid.Column="2"
+                            Text="🔄"
+                            Command="{Binding RefreshCommand}"
+                            BackgroundColor="{StaticResource Primary}"
+                            TextColor="White"
+                            CornerRadius="12"
+                            WidthRequest="48"
+                            HeightRequest="48"
+                            FontSize="16"
+                            Padding="0">
+                        <Button.Triggers>
+                            <DataTrigger TargetType="Button" Binding="{Binding IsLoading}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                                <Setter Property="BackgroundColor" Value="{StaticResource Gray400}" />
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </Grid>
+                
+                <!-- Action Buttons -->
+                <Grid Grid.Row="1" ColumnDefinitions="*,*,*" ColumnSpacing="12">
+                    <Button Grid.Column="0"
+                            Text="📤 Export"
+                            Command="{Binding ExportHistoryCommand}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                            CornerRadius="12"
+                            Padding="0,12"
+                            FontSize="14"
+                            BorderColor="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                            BorderWidth="1" />
+                    
+                    <Button Grid.Column="1"
+                            Text="🗑️ Clear All"
+                            Command="{Binding ClearHistoryCommand}"
+                            BackgroundColor="{StaticResource Error}"
+                            TextColor="White"
+                            CornerRadius="12"
+                            Padding="0,12"
+                            FontSize="14" />
+                    
+                    <Button Grid.Column="2"
+                            Text="📊 Stats"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                            CornerRadius="12"
+                            Padding="0,12"
+                            FontSize="14"
+                            BorderColor="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                            BorderWidth="1" />
+                </Grid>
+            </Grid>
+        </Border>
+
+        <!-- History List -->
+        <Border Grid.Row="2"
+                BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                StrokeShape="RoundRectangle 16"
+                StrokeThickness="0"
+                Padding="0">
+            <Border.Shadow>
+                <Shadow Brush="{StaticResource Gray300}"
+                        Offset="0,2"
+                        Radius="8"
+                        Opacity="0.1" />
+            </Border.Shadow>
+            
+            <Grid Padding="24,20" RowDefinitions="Auto,*" RowSpacing="16">
+                <Label Grid.Row="0"
+                       Text="Recent Transfers" 
+                       FontSize="18" 
+                       FontAttributes="Bold" 
+                       TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+
+                <CollectionView Grid.Row="1"
+                                ItemsSource="{Binding FilteredTransfers}"
+                                BackgroundColor="Transparent">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:TransferHistory">
+                            <Border BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                                    StrokeShape="RoundRectangle 12"
+                                    StrokeThickness="0"
+                                    Padding="16"
+                                    Margin="0,4">
+                                <!-- Fixed Grid Layout with proper alignment -->
+                                <Grid ColumnDefinitions="48,*,Auto" ColumnSpacing="12">
+                                    
+                                    <!-- File Icon Container - Fixed width and proper alignment -->
+                                    <Border Grid.Column="0"
+                                            BackgroundColor="{Binding StatusColor}"
+                                            WidthRequest="40"
+                                            HeightRequest="40"
+                                            StrokeShape="RoundRectangle 10"
+                                            VerticalOptions="Start"
+                                            HorizontalOptions="Center">
+                                        <Label Text="{Binding DirectionIcon}" 
+                                               FontSize="16" 
+                                               HorizontalOptions="Center" 
+                                               VerticalOptions="Center"
+                                               TextColor="White" />
+                                    </Border>
+                                    
+                                    <!-- Content Area with all text information -->
+                                    <StackLayout Grid.Column="1" Spacing="4" VerticalOptions="Start">
+                                        
+                                        <!-- File Name and Status -->
+                                        <Grid ColumnDefinitions="*" ColumnSpacing="8">
+                                            <Label Grid.Column="0"
+                                                   Text="{Binding FileName}" 
+                                                   FontSize="16" 
+                                                   FontAttributes="Bold" 
+                                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                                   LineBreakMode="TailTruncation"
+                                                   VerticalOptions="Center" />
+                                        </Grid>
+                                        
+                                        <!-- Direction and Peer -->
+                                        <StackLayout Orientation="Horizontal" Spacing="8">
+                                            <Label Text="{Binding DirectionText}" 
+                                                   FontSize="12" 
+                                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                            <Label Text="•" 
+                                                   FontSize="12" 
+                                                   TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextTertiaryDark}}" />
+                                            <Label Text="{Binding PeerName}" 
+                                                   FontSize="12" 
+                                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                                   LineBreakMode="TailTruncation"
+                                                   HorizontalOptions="FillAndExpand" />
+                                        </StackLayout>
+                                        
+                                        <!-- Size, Duration, Time -->
+                                        <StackLayout Orientation="Horizontal" Spacing="8">
+                                            <Label Text="{Binding FileSizeFormatted}" 
+                                                   FontSize="12" 
+                                                   TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextTertiaryDark}}" />
+                                            <Label Text="•" 
+                                                   FontSize="12" 
+                                                   TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextTertiaryDark}}" />
+                                            <Label Text="{Binding DurationFormatted}" 
+                                                   FontSize="12" 
+                                                   TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextTertiaryDark}}" />
+                                            <Label Text="•" 
+                                                   FontSize="12" 
+                                                   TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextTertiaryDark}}" />
+                                            <Label Text="{Binding TimeAgo}" 
+                                                   FontSize="12" 
+                                                   TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextTertiaryDark}}" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                    
+                                    <!-- Action Buttons -->
+                                    <StackLayout Grid.Column="2" Orientation="Horizontal" VerticalOptions="Start" Spacing="4">
+                                        <Button Text="📂"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HistoryViewModel}}, Path=OpenFileLocationCommand}"
+                                                CommandParameter="{Binding}"
+                                                BackgroundColor="Transparent"
+                                                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                                WidthRequest="32"
+                                                HeightRequest="32"
+                                                FontSize="12"
+                                                Padding="0"
+                                                IsVisible="{Binding Status, Converter={StaticResource EqualConverter}, ConverterParameter={x:Static models:TransferStatus.Completed}}" />
+                                        
+                                        <Button Text="🔄"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HistoryViewModel}}, Path=RetryTransferCommand}"
+                                                CommandParameter="{Binding}"
+                                                BackgroundColor="Transparent"
+                                                TextColor="{StaticResource Warning}"
+                                                WidthRequest="32"
+                                                HeightRequest="32"
+                                                FontSize="12"
+                                                Padding="0"
+                                                IsVisible="{Binding Status, Converter={StaticResource EqualConverter}, ConverterParameter={x:Static models:TransferStatus.Failed}}" />
+                                                
+                                        <Button Text="🗑️"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HistoryViewModel}}, Path=DeleteTransferCommand}"
+                                                CommandParameter="{Binding}"
+                                                BackgroundColor="Transparent"
+                                                TextColor="{StaticResource Error}"
+                                                WidthRequest="32"
+                                                HeightRequest="32"
+                                                FontSize="12"
+                                                Padding="0" />
+                                    </StackLayout>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    
+                    <CollectionView.EmptyView>
+                        <StackLayout Padding="40" HorizontalOptions="Center" Spacing="12">
+                            <Label Text="📁" FontSize="48" HorizontalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextTertiaryDark}}" />
+                            <Label Text="No transfer history found" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" 
+                                   HorizontalOptions="Center" />
+                            <Label Text="Start transferring files to see your history here" 
+                                   FontSize="14" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextTertiaryDark}}" 
+                                   HorizontalOptions="Center" />
+                        </StackLayout>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

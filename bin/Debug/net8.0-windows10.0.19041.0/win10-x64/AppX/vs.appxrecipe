@@ -29,25 +29,25 @@
     <AppXManifest Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2025-05-30T18:36:58.745</Modified>
+      <Modified>2025-06-03T16:10:26.761</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2025-05-30T18:36:58.633</Modified>
+      <Modified>2025-06-03T15:19:29.345</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\LocalDropApp.runtimeconfig.json">
       <PackagePath>LocalDropApp.runtimeconfig.json</PackagePath>
-      <Modified>2025-05-30T18:36:58.490</Modified>
+      <Modified>2025-06-03T15:19:29.064</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\LocalDropApp.dll">
       <PackagePath>LocalDropApp.dll</PackagePath>
-      <Modified>2025-05-30T18:36:57.713</Modified>
+      <Modified>2025-06-03T16:10:26.001</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>LocalDropApp.exe</PackagePath>
-      <Modified>2025-05-30T18:36:57.723</Modified>
+      <Modified>2025-06-03T16:10:26.008</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\Resources\Raw\AboutAssets.txt">
       <PackagePath>AboutAssets.txt</PackagePath>
@@ -55,23 +55,23 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-100.png">
       <PackagePath>splashSplashScreen.scale-100.png</PackagePath>
-      <Modified>2025-05-30T18:11:56.680</Modified>
+      <Modified>2025-06-03T15:19:27.122</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-125.png">
       <PackagePath>splashSplashScreen.scale-125.png</PackagePath>
-      <Modified>2025-05-30T18:11:56.688</Modified>
+      <Modified>2025-06-03T15:19:27.130</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-150.png">
       <PackagePath>splashSplashScreen.scale-150.png</PackagePath>
-      <Modified>2025-05-30T18:11:56.700</Modified>
+      <Modified>2025-06-03T15:19:27.141</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-200.png">
       <PackagePath>splashSplashScreen.scale-200.png</PackagePath>
-      <Modified>2025-05-30T18:11:56.720</Modified>
+      <Modified>2025-06-03T15:19:27.158</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-400.png">
       <PackagePath>splashSplashScreen.scale-400.png</PackagePath>
-      <Modified>2025-05-30T18:11:56.792</Modified>
+      <Modified>2025-06-03T15:19:27.218</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\f\OpenSans-Regular.ttf">
       <PackagePath>OpenSans-Regular.ttf</PackagePath>
@@ -83,211 +83,211 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appicon.ico">
       <PackagePath>appicon.ico</PackagePath>
-      <Modified>2025-05-30T18:36:48.918</Modified>
+      <Modified>2025-06-03T15:19:27.699</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-100.png">
       <PackagePath>appiconLargeTile.scale-100.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.912</Modified>
+      <Modified>2025-06-03T15:19:27.690</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-125.png">
       <PackagePath>appiconLargeTile.scale-125.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.912</Modified>
+      <Modified>2025-06-03T15:19:27.689</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-150.png">
       <PackagePath>appiconLargeTile.scale-150.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.912</Modified>
+      <Modified>2025-06-03T15:19:27.689</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-200.png">
       <PackagePath>appiconLargeTile.scale-200.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.912</Modified>
+      <Modified>2025-06-03T15:19:27.689</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-400.png">
       <PackagePath>appiconLargeTile.scale-400.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.912</Modified>
+      <Modified>2025-06-03T15:19:27.689</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-16.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-16.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.916</Modified>
+      <Modified>2025-06-03T15:19:27.696</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-24.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-24.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.916</Modified>
+      <Modified>2025-06-03T15:19:27.696</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-256.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-256.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.915</Modified>
+      <Modified>2025-06-03T15:19:27.695</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-32.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-32.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.916</Modified>
+      <Modified>2025-06-03T15:19:27.695</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-48.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-48.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.916</Modified>
+      <Modified>2025-06-03T15:19:27.695</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-16.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-16.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.917</Modified>
+      <Modified>2025-06-03T15:19:27.697</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-24.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-24.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.917</Modified>
+      <Modified>2025-06-03T15:19:27.697</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-256.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-256.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.916</Modified>
+      <Modified>2025-06-03T15:19:27.696</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-32.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-32.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.916</Modified>
+      <Modified>2025-06-03T15:19:27.697</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-48.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-48.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.916</Modified>
+      <Modified>2025-06-03T15:19:27.696</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-100.png">
       <PackagePath>appiconLogo.scale-100.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.918</Modified>
+      <Modified>2025-06-03T15:19:27.699</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-125.png">
       <PackagePath>appiconLogo.scale-125.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.918</Modified>
+      <Modified>2025-06-03T15:19:27.699</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-150.png">
       <PackagePath>appiconLogo.scale-150.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.918</Modified>
+      <Modified>2025-06-03T15:19:27.699</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-200.png">
       <PackagePath>appiconLogo.scale-200.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.918</Modified>
+      <Modified>2025-06-03T15:19:27.698</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-400.png">
       <PackagePath>appiconLogo.scale-400.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.918</Modified>
+      <Modified>2025-06-03T15:19:27.698</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-16.png">
       <PackagePath>appiconLogo.targetsize-16.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.918</Modified>
+      <Modified>2025-06-03T15:19:27.698</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-24.png">
       <PackagePath>appiconLogo.targetsize-24.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.917</Modified>
+      <Modified>2025-06-03T15:19:27.698</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-256.png">
       <PackagePath>appiconLogo.targetsize-256.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.917</Modified>
+      <Modified>2025-06-03T15:19:27.697</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-32.png">
       <PackagePath>appiconLogo.targetsize-32.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.917</Modified>
+      <Modified>2025-06-03T15:19:27.698</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-48.png">
       <PackagePath>appiconLogo.targetsize-48.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.917</Modified>
+      <Modified>2025-06-03T15:19:27.697</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-100.png">
       <PackagePath>appiconMediumTile.scale-100.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.914</Modified>
+      <Modified>2025-06-03T15:19:27.692</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-125.png">
       <PackagePath>appiconMediumTile.scale-125.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.914</Modified>
+      <Modified>2025-06-03T15:19:27.692</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-150.png">
       <PackagePath>appiconMediumTile.scale-150.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.914</Modified>
+      <Modified>2025-06-03T15:19:27.692</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-200.png">
       <PackagePath>appiconMediumTile.scale-200.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.913</Modified>
+      <Modified>2025-06-03T15:19:27.691</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-400.png">
       <PackagePath>appiconMediumTile.scale-400.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.913</Modified>
+      <Modified>2025-06-03T15:19:27.691</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-100.png">
       <PackagePath>appiconSmallTile.scale-100.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.915</Modified>
+      <Modified>2025-06-03T15:19:27.693</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-125.png">
       <PackagePath>appiconSmallTile.scale-125.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.915</Modified>
+      <Modified>2025-06-03T15:19:27.693</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-150.png">
       <PackagePath>appiconSmallTile.scale-150.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.914</Modified>
+      <Modified>2025-06-03T15:19:27.693</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-200.png">
       <PackagePath>appiconSmallTile.scale-200.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.914</Modified>
+      <Modified>2025-06-03T15:19:27.693</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-400.png">
       <PackagePath>appiconSmallTile.scale-400.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.914</Modified>
+      <Modified>2025-06-03T15:19:27.692</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-100.png">
       <PackagePath>appiconStoreLogo.scale-100.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.915</Modified>
+      <Modified>2025-06-03T15:19:27.695</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-125.png">
       <PackagePath>appiconStoreLogo.scale-125.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.915</Modified>
+      <Modified>2025-06-03T15:19:27.694</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-150.png">
       <PackagePath>appiconStoreLogo.scale-150.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.915</Modified>
+      <Modified>2025-06-03T15:19:27.694</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-200.png">
       <PackagePath>appiconStoreLogo.scale-200.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.915</Modified>
+      <Modified>2025-06-03T15:19:27.694</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-400.png">
       <PackagePath>appiconStoreLogo.scale-400.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.915</Modified>
+      <Modified>2025-06-03T15:19:27.694</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-100.png">
       <PackagePath>appiconWideTile.scale-100.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.913</Modified>
+      <Modified>2025-06-03T15:19:27.691</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-125.png">
       <PackagePath>appiconWideTile.scale-125.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.913</Modified>
+      <Modified>2025-06-03T15:19:27.690</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-150.png">
       <PackagePath>appiconWideTile.scale-150.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.913</Modified>
+      <Modified>2025-06-03T15:19:27.690</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-200.png">
       <PackagePath>appiconWideTile.scale-200.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.913</Modified>
+      <Modified>2025-06-03T15:19:27.690</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-400.png">
       <PackagePath>appiconWideTile.scale-400.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.912</Modified>
+      <Modified>2025-06-03T15:19:27.690</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-100.png">
       <PackagePath>dotnet_bot.scale-100.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.912</Modified>
+      <Modified>2025-06-03T15:19:27.688</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-125.png">
       <PackagePath>dotnet_bot.scale-125.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.911</Modified>
+      <Modified>2025-06-03T15:19:27.688</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-150.png">
       <PackagePath>dotnet_bot.scale-150.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.911</Modified>
+      <Modified>2025-06-03T15:19:27.688</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-200.png">
       <PackagePath>dotnet_bot.scale-200.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.911</Modified>
+      <Modified>2025-06-03T15:19:27.688</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-400.png">
       <PackagePath>dotnet_bot.scale-400.png</PackagePath>
-      <Modified>2025-05-30T18:36:48.911</Modified>
+      <Modified>2025-06-03T15:19:27.687</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\LocalDropApp.deps.json">
       <PackagePath>LocalDropApp.deps.json</PackagePath>
-      <Modified>2025-05-30T18:36:58.390</Modified>
+      <Modified>2025-06-03T15:19:28.959</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Brandon\.nuget\packages\microsoft.windows.sdk.net.ref\10.0.19041.56\lib\net8.0\Microsoft.Windows.SDK.NET.dll">
       <PackagePath>Microsoft.Windows.SDK.NET.dll</PackagePath>

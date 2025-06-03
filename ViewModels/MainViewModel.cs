@@ -61,7 +61,7 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task SelectFiles()
+    private void SelectFiles()
     {
         try
         {
@@ -81,7 +81,7 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task SendFiles()
+    private void SendFiles()
     {
         if (SelectedPeer == null || !HasSelectedFiles)
         {

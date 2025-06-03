@@ -5,330 +5,278 @@
              xmlns:vm="clr-namespace:LocalDropApp.ViewModels"
              xmlns:models="clr-namespace:LocalDropApp.Models"
              x:Class="LocalDropApp.MainPage"
-             Title="Local Drop"
-             BackgroundColor="#F8F9FA">
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
 
     <ContentPage.BindingContext>
         <vm:MainViewModel />
     </ContentPage.BindingContext>
 
-    <ScrollView>
-        <Grid Padding="20" RowSpacing="20">
+    <!-- Main Content -->
+    <ScrollView Padding="24">
+        <Grid RowSpacing="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <!-- Header Section -->
-            <Frame Grid.Row="0" 
-                   BackgroundColor="White" 
-                   CornerRadius="15" 
-                   Padding="20"
-                   HasShadow="True">
-                <Grid ColumnDefinitions="*,Auto">
-                    <StackLayout>
-                        <Label Text="📡 Local Drop" 
-                               FontSize="28" 
-                               FontAttributes="Bold" 
-                               TextColor="#2C3E50" />
-                        <Label Text="{Binding DeviceName, StringFormat='Device: {0}'}" 
-                               FontSize="16" 
-                               TextColor="#7F8C8D" />
-                        <Label Text="{Binding StatusMessage}" 
-                               FontSize="14" 
-                               TextColor="#3498DB" 
-                               Margin="0,5,0,0" />
-                    </StackLayout>
+            <!-- Quick Actions Section -->
+            <Border Grid.Row="0"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="0"
+                    Padding="0">
+                <Border.Shadow>
+                    <Shadow Brush="{StaticResource Gray300}"
+                            Offset="0,2"
+                            Radius="8"
+                            Opacity="0.1" />
+                </Border.Shadow>
+                
+                <Grid Padding="24,20" RowDefinitions="Auto,Auto" RowSpacing="20">
+                    <Label Grid.Row="0"
+                           Text="Quick Actions" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
                     
-                    <Button Grid.Column="1"
-                            Text="🔄"
-                            Command="{Binding RefreshPeersCommand}"
-                            BackgroundColor="#3498DB"
-                            TextColor="White"
-                            CornerRadius="25"
-                            WidthRequest="50"
-                            HeightRequest="50"
-                            FontSize="20" />
-                </Grid>
-            </Frame>
-
-            <!-- Peer Discovery Section -->
-            <Frame Grid.Row="1" 
-                   BackgroundColor="White" 
-                   CornerRadius="15" 
-                   Padding="15"
-                   HasShadow="True">
-                <StackLayout>
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Text="🌐 Discovered Peers" 
-                               FontSize="20" 
-                               FontAttributes="Bold" 
-                               TextColor="#2C3E50" />
-                        <Button Grid.Column="1"
-                                Text="Discover"
+                    <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <Button Grid.Column="0"
+                                Text="🔍 Discover Peers"
                                 Command="{Binding StartDiscoveryCommand}"
-                                BackgroundColor="#27AE60"
+                                BackgroundColor="{StaticResource Primary}"
                                 TextColor="White"
-                                CornerRadius="20"
-                                Padding="15,8">
+                                CornerRadius="12"
+                                Padding="0,16"
+                                FontSize="14"
+                                FontAttributes="Bold">
                             <Button.Triggers>
                                 <DataTrigger TargetType="Button" Binding="{Binding IsDiscovering}" Value="True">
-                                    <Setter Property="Text" Value="Searching..." />
+                                    <Setter Property="Text" Value="🔄 Searching..." />
                                     <Setter Property="IsEnabled" Value="False" />
-                                    <Setter Property="BackgroundColor" Value="#95A5A6" />
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Gray400}" />
                                 </DataTrigger>
                             </Button.Triggers>
                         </Button>
+                        
+                        <Button Grid.Column="1"
+                                Text="📁 Select Files"
+                                Command="{Binding SelectFilesCommand}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                                CornerRadius="12"
+                                Padding="0,16"
+                                FontSize="14"
+                                FontAttributes="Bold"
+                                BorderColor="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                                BorderWidth="1" />
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!-- Peer Discovery Section -->
+            <Border Grid.Row="1"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="0"
+                    Padding="0">
+                <Border.Shadow>
+                    <Shadow Brush="{StaticResource Gray300}"
+                            Offset="0,2"
+                            Radius="8"
+                            Opacity="0.1" />
+                </Border.Shadow>
+                
+                <Grid Padding="24,20" RowDefinitions="Auto,Auto" RowSpacing="16">
+                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Available Devices" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                            <Label Text="{Binding DiscoveredPeers.Count, StringFormat='{0} devices found'}" 
+                                   FontSize="14" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" 
+                                   Margin="0,4,0,0" />
+                        </StackLayout>
+                        
+                        <Ellipse Grid.Column="1"
+                                 Fill="{StaticResource Success}"
+                                 WidthRequest="12"
+                                 HeightRequest="12"
+                                 VerticalOptions="Center"
+                                 IsVisible="{Binding IsDiscovering, Converter={StaticResource InvertedBoolConverter}}" />
                     </Grid>
 
-                    <CollectionView ItemsSource="{Binding DiscoveredPeers}" 
+                    <CollectionView Grid.Row="1"
+                                    ItemsSource="{Binding DiscoveredPeers}" 
                                     SelectionMode="Single"
                                     SelectedItem="{Binding SelectedPeer}"
-                                    HeightRequest="120"
-                                    Margin="0,10,0,0">
+                                    HeightRequest="160">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:PeerDevice">
-                                <Grid Padding="10,8" ColumnDefinitions="Auto,*,Auto">
-                                    <Ellipse Grid.Column="0"
-                                             Fill="{Binding StatusColor}"
-                                             WidthRequest="12"
-                                             HeightRequest="12"
-                                             VerticalOptions="Center" />
-                                    
-                                    <StackLayout Grid.Column="1" Margin="15,0,0,0">
-                                        <Label Text="{Binding Name}" 
-                                               FontSize="16" 
-                                               FontAttributes="Bold" 
-                                               TextColor="#2C3E50" />
-                                        <Label Text="{Binding IpAddress}" 
-                                               FontSize="14" 
-                                               TextColor="#7F8C8D" />
-                                    </StackLayout>
-                                    
-                                    <Label Grid.Column="2"
-                                           Text="{Binding StatusText}"
-                                           FontSize="12"
-                                           TextColor="{Binding StatusColor}"
-                                           VerticalOptions="Center" />
-                                </Grid>
+                                <Border BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                                        StrokeShape="RoundRectangle 12"
+                                        StrokeThickness="0"
+                                        Padding="16,12"
+                                        Margin="0,4">
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                        <Border Grid.Column="0"
+                                                BackgroundColor="{StaticResource Primary}"
+                                                WidthRequest="40"
+                                                HeightRequest="40"
+                                                StrokeShape="RoundRectangle 10">
+                                            <Label Text="💻" 
+                                                   FontSize="18" 
+                                                   HorizontalOptions="Center" 
+                                                   VerticalOptions="Center"
+                                                   TextColor="White" />
+                                        </Border>
+                                        
+                                        <StackLayout Grid.Column="1" VerticalOptions="Center">
+                                            <Label Text="{Binding Name}" 
+                                                   FontSize="16" 
+                                                   FontAttributes="Bold" 
+                                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                            <Label Text="{Binding IpAddress}" 
+                                                   FontSize="14" 
+                                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                        </StackLayout>
+                                        
+                                        <Ellipse Grid.Column="2"
+                                                 Fill="{Binding StatusColor}"
+                                                 WidthRequest="8"
+                                                 HeightRequest="8"
+                                                 VerticalOptions="Center" />
+                                    </Grid>
+                                </Border>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
+                        
+                        <CollectionView.EmptyView>
+                            <StackLayout Padding="20" HorizontalOptions="Center">
+                                <Label Text="🔍" FontSize="48" HorizontalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextTertiaryDark}}" />
+                                <Label Text="No devices found" 
+                                       FontSize="16" 
+                                       FontAttributes="Bold" 
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" 
+                                       HorizontalOptions="Center" />
+                                <Label Text="Start discovery to find nearby devices" 
+                                       FontSize="14" 
+                                       TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextTertiaryDark}}" 
+                                       HorizontalOptions="Center" 
+                                       Margin="0,4,0,0" />
+                            </StackLayout>
+                        </CollectionView.EmptyView>
                     </CollectionView>
-                </StackLayout>
-            </Frame>
+                </Grid>
+            </Border>
 
-            <!-- File Selection Section -->
-            <Frame Grid.Row="2" 
-                   BackgroundColor="White" 
-                   CornerRadius="15" 
-                   Padding="15"
-                   HasShadow="True">
-                <StackLayout>
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Text="📁 File Selection" 
-                               FontSize="20" 
-                               FontAttributes="Bold" 
-                               TextColor="#2C3E50" />
-                        <Button Grid.Column="1"
-                                Text="Select Files"
-                                Command="{Binding SelectFilesCommand}"
-                                BackgroundColor="#E74C3C"
-                                TextColor="White"
-                                CornerRadius="20"
-                                Padding="15,8" />
-                    </Grid>
+            <!-- File Transfer Section -->
+            <Border Grid.Row="2"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="0"
+                    Padding="0">
+                <Border.Shadow>
+                    <Shadow Brush="{StaticResource Gray300}"
+                            Offset="0,2"
+                            Radius="8"
+                            Opacity="0.1" />
+                </Border.Shadow>
+                
+                <Grid Padding="24,20" RowDefinitions="Auto,Auto,*,Auto" RowSpacing="16">
+                    <Label Grid.Row="0"
+                           Text="File Transfer" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
 
                     <!-- Drag Drop Area -->
-                    <Border Stroke="#BDC3C7" 
+                    <Border Grid.Row="1"
+                            Stroke="{AppThemeBinding Light={StaticResource BorderMediumLight}, Dark={StaticResource BorderMediumDark}}" 
                             StrokeThickness="2" 
-                            StrokeDashArray="5,5"
-                            BackgroundColor="#ECF0F1"
-                            Padding="20"
-                            Margin="0,10,0,0">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
-                        </Border.StrokeShape>
+                            StrokeDashArray="6,4"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="24"
+                            MinimumHeightRequest="120">
                         
-                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                            <Label Text="📎" FontSize="40" HorizontalOptions="Center" />
-                            <Label Text="Drag files here or click 'Select Files'" 
+                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
+                            <Label Text="📎" FontSize="32" HorizontalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextTertiaryDark}}" />
+                            <Label Text="Drop files here or select manually" 
+                                   FontSize="16" 
+                                   FontAttributes="Bold" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" 
+                                   HorizontalOptions="Center" />
+                            <Label Text="Supports multiple files and folders" 
                                    FontSize="14" 
-                                   TextColor="#7F8C8D" 
+                                   TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextTertiaryDark}}" 
                                    HorizontalOptions="Center" />
                         </StackLayout>
                     </Border>
 
                     <!-- Selected Files List -->
-                    <CollectionView ItemsSource="{Binding SelectedFiles}" 
-                                    HeightRequest="100"
-                                    Margin="0,10,0,0"
-                                    IsVisible="{Binding HasSelectedFiles}">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="x:String">
-                                <Grid Padding="10,5" ColumnDefinitions="*,Auto">
-                                    <Label Text="{Binding}" 
-                                           FontSize="14" 
-                                           TextColor="#2C3E50" 
-                                           VerticalOptions="Center" />
-                                    <Button Grid.Column="1"
-                                            Text="✖"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=RemoveSelectedFileCommand}"
-                                            CommandParameter="{Binding}"
-                                            BackgroundColor="#E74C3C"
-                                            TextColor="White"
-                                            CornerRadius="15"
-                                            WidthRequest="30"
-                                            HeightRequest="30"
-                                            FontSize="12"
-                                            Padding="0" />
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                    <ScrollView Grid.Row="2" IsVisible="{Binding HasSelectedFiles}">
+                        <CollectionView ItemsSource="{Binding SelectedFiles}" 
+                                        HeightRequest="120">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
+                                            StrokeShape="RoundRectangle 8"
+                                            StrokeThickness="0"
+                                            Padding="12,8"
+                                            Margin="0,2">
+                                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                            <Label Grid.Column="0"
+                                                   Text="📄" 
+                                                   FontSize="16" 
+                                                   VerticalOptions="Center"
+                                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                            <Label Grid.Column="1"
+                                                   Text="{Binding}" 
+                                                   FontSize="14" 
+                                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" 
+                                                   VerticalOptions="Center"
+                                                   LineBreakMode="TailTruncation" />
+                                            <Button Grid.Column="2"
+                                                    Text="✕"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=RemoveSelectedFileCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    BackgroundColor="Transparent"
+                                                    TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextTertiaryDark}}"
+                                                    WidthRequest="24"
+                                                    HeightRequest="24"
+                                                    FontSize="12"
+                                                    Padding="0" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </ScrollView>
 
                     <!-- Send Button -->
-                    <Button Text="🚀 Send Files" 
+                    <Button Grid.Row="3"
+                            Text="🚀 Send Files" 
                             Command="{Binding SendFilesCommand}"
-                            BackgroundColor="#9B59B6"
+                            BackgroundColor="{StaticResource Success}"
                             TextColor="White"
-                            CornerRadius="25"
-                            Padding="20,12"
+                            CornerRadius="12"
+                            Padding="0,16"
                             FontSize="16"
                             FontAttributes="Bold"
-                            Margin="0,10,0,0"
-                            IsEnabled="{Binding HasSelectedFiles}" />
-                </StackLayout>
-            </Frame>
-
-            <!-- Transfer Status Section -->
-            <Frame Grid.Row="3" 
-                   BackgroundColor="White" 
-                   CornerRadius="15" 
-                   Padding="15"
-                   HasShadow="True">
-                <StackLayout>
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Text="📊 Transfer Status" 
-                               FontSize="20" 
-                               FontAttributes="Bold" 
-                               TextColor="#2C3E50" />
-                        <Button Grid.Column="1"
-                                Text="Clear History"
-                                Command="{Binding ClearHistoryCommand}"
-                                BackgroundColor="#95A5A6"
-                                TextColor="White"
-                                CornerRadius="20"
-                                Padding="12,6"
-                                FontSize="12" />
-                    </Grid>
-
-                    <!-- Active Transfers -->
-                    <Label Text="Active Transfers" 
-                           FontSize="16" 
-                           FontAttributes="Bold" 
-                           TextColor="#2C3E50" 
-                           Margin="0,10,0,5"
-                           IsVisible="{Binding ActiveTransfers.Count, Converter={StaticResource IntToBoolConverter}}" />
-                    
-                    <CollectionView ItemsSource="{Binding ActiveTransfers}" 
-                                    HeightRequest="120">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:FileTransfer">
-                                <Border Stroke="#BDC3C7" 
-                                        StrokeThickness="1" 
-                                        BackgroundColor="#F8F9FA"
-                                        Padding="15"
-                                        Margin="0,5">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="8" />
-                                    </Border.StrokeShape>
-                                    
-                                    <StackLayout>
-                                        <Grid ColumnDefinitions="*,Auto">
-                                            <Label Text="{Binding FileName}" 
-                                                   FontSize="16" 
-                                                   FontAttributes="Bold" 
-                                                   TextColor="#2C3E50" />
-                                            <Label Grid.Column="1"
-                                                   Text="{Binding StatusText}"
-                                                   FontSize="12"
-                                                   TextColor="{Binding StatusColor}" />
-                                        </Grid>
-                                        
-                                        <ProgressBar Progress="{Binding ProgressPercentage, Converter={StaticResource PercentageConverter}}"
-                                                     ProgressColor="#3498DB"
-                                                     BackgroundColor="#ECF0F1"
-                                                     HeightRequest="8"
-                                                     Margin="0,8" />
-                                        
-                                        <Grid ColumnDefinitions="*,Auto">
-                                            <Label Text="{Binding BytesTransferredFormatted, StringFormat='{0} transferred'}" 
-                                                   FontSize="12" 
-                                                   TextColor="#7F8C8D" />
-                                            <Label Grid.Column="1"
-                                                   Text="{Binding EstimatedTimeRemainingText}" 
-                                                   FontSize="12" 
-                                                   TextColor="#7F8C8D" />
-                                        </Grid>
-                                    </StackLayout>
-                                </Border>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-
-                    <!-- Transfer History -->
-                    <Label Text="Recent History" 
-                           FontSize="16" 
-                           FontAttributes="Bold" 
-                           TextColor="#2C3E50" 
-                           Margin="0,15,0,5"
-                           IsVisible="{Binding TransferHistory.Count, Converter={StaticResource IntToBoolConverter}}" />
-                    
-                    <CollectionView ItemsSource="{Binding TransferHistory}" 
-                                    HeightRequest="100">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:FileTransfer">
-                                <Grid Padding="10,8" ColumnDefinitions="*,Auto,Auto">
-                                    <StackLayout>
-                                        <Label Text="{Binding FileName}" 
-                                               FontSize="14" 
-                                               FontAttributes="Bold" 
-                                               TextColor="#2C3E50" />
-                                        <Label Text="{Binding FileSizeFormatted}" 
-                                               FontSize="12" 
-                                               TextColor="#7F8C8D" />
-                                    </StackLayout>
-                                    
-                                    <Label Grid.Column="1"
-                                           Text="{Binding StatusText}"
-                                           FontSize="12"
-                                           TextColor="{Binding StatusColor}"
-                                           VerticalOptions="Center"
-                                           Margin="10,0" />
-                                    
-                                    <Label Grid.Column="2"
-                                           Text="{Binding StartTime, StringFormat='{0:HH:mm}'}"
-                                           FontSize="10"
-                                           TextColor="#95A5A6"
-                                           VerticalOptions="Center" />
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </StackLayout>
-            </Frame>
-
-            <!-- Footer -->
-            <Label Grid.Row="4"
-                   Text="💡 Select a peer and files to start transferring"
-                   FontSize="12"
-                   TextColor="#7F8C8D"
-                   HorizontalOptions="Center"
-                   Margin="0,10,0,0" />
+                            Margin="0,8,0,0"
+                            IsEnabled="{Binding CanSendFiles}">
+                        <Button.Triggers>
+                            <DataTrigger TargetType="Button" Binding="{Binding CanSendFiles}" Value="False">
+                                <Setter Property="BackgroundColor" Value="{StaticResource Gray300}" />
+                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextTertiaryDark}}" />
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </Grid>
+            </Border>
         </Grid>
     </ScrollView>
-
 </ContentPage>

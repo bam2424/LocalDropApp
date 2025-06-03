@@ -1,11 +1,13 @@
-﻿namespace LocalDropApp;
+﻿using LocalDropApp.Services;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace LocalDropApp;
 
 public partial class App : Application
 {
-	public App()
-	{
-		InitializeComponent();
-
-		MainPage = new AppShell();
-	}
+    public App(IServiceProvider services)
+    {
+        InitializeComponent();
+        MainPage = services.GetRequiredService<AppShell>();
+    }
 }
