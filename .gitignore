@@ -19,3 +19,25 @@ release/
 
 # Standalone executables (too large for git - use GitHub Releases)
 *.exe
+
+# Android build artifacts and generated files
+**/R.txt
+**/colors.xml
+**/appicon.xml
+**/appicon_round.xml
+**/resizetizer/**
+
+# Assembly metadata and generated files
+**/LocalDropApp.AssemblyInfo.cs
+**/LocalDropApp.AssemblyInfoInputs.cache
+**/LocalDropApp.csproj.AssemblyReference.cache
+**/LocalDropApp.csproj.FileListAbsolute.txt
+
+# XAML generated files
+**/XamlSaveStateFile.xml
+**/XamlTypeInfo.g.cs
+**/App.g.cs
+
+# Android resource files
+**/case_map.txt
+**/_Microsoft.Android.Resource.Designer.dll
