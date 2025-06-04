@@ -13,5 +13,9 @@ TASKS.md
 TESTING_GUIDE.md
 TROUBLESHOOTING.md
 
-# Build tool source (keep only the exe)
-BuildTool/
+# Build output folders (temporary)
+LocalDropApp_Standalone/
+release/
+
+# Standalone executables (too large for git - use GitHub Releases)
+*.exe
