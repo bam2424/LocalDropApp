@@ -1,7 +1,9 @@
 bin/
 obj/
 .vs/
+.cursor/
 *.user
 *.suo
 *.cache
 *.log
+*.md

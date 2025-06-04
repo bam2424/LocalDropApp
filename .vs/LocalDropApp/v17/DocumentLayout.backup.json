@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{F8D1AFAC-710E-402E-A502-8F33C6D6A823}|LocalDropApp.csproj|c:\\users\\brandon\\desktop\\cursorprojects\\localdropapp\\services\\filetransferservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8D1AFAC-710E-402E-A502-8F33C6D6A823}|LocalDropApp.csproj|solutionrelative:services\\filetransferservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8D1AFAC-710E-402E-A502-8F33C6D6A823}|LocalDropApp.csproj|c:\\users\\brandon\\desktop\\cursorprojects\\localdropapp\\tasks.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{F8D1AFAC-710E-402E-A502-8F33C6D6A823}|LocalDropApp.csproj|solutionrelative:tasks.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F8D1AFAC-710E-402E-A502-8F33C6D6A823}|LocalDropApp.csproj|c:\\users\\brandon\\desktop\\cursorprojects\\localdropapp\\views\\historypage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{F8D1AFAC-710E-402E-A502-8F33C6D6A823}|LocalDropApp.csproj|solutionrelative:views\\historypage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
@@ -54,6 +62,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{F8D1AFAC-710E-402E-A502-8F33C6D6A823}|LocalDropApp.csproj|c:\\users\\brandon\\desktop\\cursorprojects\\localdropapp\\models\\peerdevice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F8D1AFAC-710E-402E-A502-8F33C6D6A823}|LocalDropApp.csproj|solutionrelative:models\\peerdevice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8D1AFAC-710E-402E-A502-8F33C6D6A823}|LocalDropApp.csproj|c:\\users\\brandon\\desktop\\cursorprojects\\localdropapp\\services\\peerdiscoveryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8D1AFAC-710E-402E-A502-8F33C6D6A823}|LocalDropApp.csproj|solutionrelative:services\\peerdiscoveryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -72,19 +84,55 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "FileTransferService.cs",
+              "DocumentMoniker": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\Services\\FileTransferService.cs",
+              "RelativeDocumentMoniker": "Services\\FileTransferService.cs",
+              "ToolTip": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\Services\\FileTransferService.cs",
+              "RelativeToolTip": "Services\\FileTransferService.cs",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAnwIAAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T15:13:01.807Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "PeerDiscoveryService.cs",
+              "DocumentMoniker": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\Services\\PeerDiscoveryService.cs",
+              "RelativeDocumentMoniker": "Services\\PeerDiscoveryService.cs",
+              "ToolTip": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\Services\\PeerDiscoveryService.cs",
+              "RelativeToolTip": "Services\\PeerDiscoveryService.cs",
+              "ViewState": "AgIAAGYAAAAAAAAAAAAnwIEAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T15:12:55.763Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TASKS.md",
+              "DocumentMoniker": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\TASKS.md",
+              "RelativeDocumentMoniker": "TASKS.md",
+              "ToolTip": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\TASKS.md",
+              "RelativeToolTip": "TASKS.md",
+              "ViewState": "AgIAACwAAAAAAAAAAAAYwF0AAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-06-04T14:24:17.834Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "HistoryPage.xaml",
               "DocumentMoniker": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\Views\\HistoryPage.xaml",
               "RelativeDocumentMoniker": "Views\\HistoryPage.xaml",
               "ToolTip": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\Views\\HistoryPage.xaml",
               "RelativeToolTip": "Views\\HistoryPage.xaml",
-              "ViewState": "AgIAAD0BAAAAAAAAAAAQwFIBAABNAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-06-03T15:41:55.369Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-03T15:41:55.369Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "MauiProgram.cs",
               "DocumentMoniker": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\MauiProgram.cs",
               "RelativeDocumentMoniker": "MauiProgram.cs",
@@ -96,7 +144,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "ThemeService.cs",
               "DocumentMoniker": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\Services\\ThemeService.cs",
               "RelativeDocumentMoniker": "Services\\ThemeService.cs",
@@ -108,7 +156,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "FileTransfer.cs",
               "DocumentMoniker": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\Models\\FileTransfer.cs",
               "RelativeDocumentMoniker": "Models\\FileTransfer.cs",
@@ -116,12 +164,11 @@
               "RelativeToolTip": "Models\\FileTransfer.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAQwBUAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-01T15:13:32.048Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-01T15:13:32.048Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "Controls_CustomTitleBar.xaml.sg.cs",
               "DocumentMoniker": "C:\\Users\\Brandon\\AppData\\Local\\Temp\\.vsdbgsrc\\273f7a05a3e595c1d745ccee4320daf035fb4e1f\\Controls_CustomTitleBar.xaml.sg.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\273f7a05a3e595c1d745ccee4320daf035fb4e1f\\Controls_CustomTitleBar.xaml.sg.cs",
@@ -134,7 +181,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "App.g.i.cs",
               "DocumentMoniker": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\obj\\Debug\\net8.0-windows10.0.19041.0\\win10-x64\\Platforms\\Windows\\App.g.i.cs",
               "RelativeDocumentMoniker": "obj\\Debug\\net8.0-windows10.0.19041.0\\win10-x64\\Platforms\\Windows\\App.g.i.cs",
@@ -146,7 +193,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "InvertedBoolConverter.cs",
               "DocumentMoniker": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\Converters\\InvertedBoolConverter.cs",
               "RelativeDocumentMoniker": "Converters\\InvertedBoolConverter.cs",
@@ -158,7 +205,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "App.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\App.xaml.cs",
               "RelativeDocumentMoniker": "App.xaml.cs",
@@ -170,7 +217,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "MainViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\ViewModels\\MainViewModel.cs",
               "RelativeDocumentMoniker": "ViewModels\\MainViewModel.cs",
@@ -178,12 +225,11 @@
               "RelativeToolTip": "ViewModels\\MainViewModel.cs",
               "ViewState": "AgIAAFAAAAAAAAAAAAAuwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-01T14:31:50.094Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-01T14:31:50.094Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "PeerDevice.cs",
               "DocumentMoniker": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\Models\\PeerDevice.cs",
               "RelativeDocumentMoniker": "Models\\PeerDevice.cs",
@@ -195,7 +241,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "AppShell.xaml.sg.cs",
               "DocumentMoniker": "C:\\Users\\Brandon\\AppData\\Local\\Temp\\.vsdbgsrc\\c6786ab14ff535850254da1a68c76c51c79c4239\\AppShell.xaml.sg.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\c6786ab14ff535850254da1a68c76c51c79c4239\\AppShell.xaml.sg.cs",
@@ -208,7 +254,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "MainPage.xaml.sg.cs",
               "DocumentMoniker": "C:\\Users\\Brandon\\AppData\\Local\\Temp\\.vsdbgsrc\\0b5580f5e029437a1285f004580898fe08bf809b\\MainPage.xaml.sg.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\0b5580f5e029437a1285f004580898fe08bf809b\\MainPage.xaml.sg.cs",
@@ -221,7 +267,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "ValueConverters.cs",
               "DocumentMoniker": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\Converters\\ValueConverters.cs",
               "RelativeDocumentMoniker": "Converters\\ValueConverters.cs",
@@ -233,7 +279,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "AppShell.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\AppShell.xaml.cs",
               "RelativeDocumentMoniker": "AppShell.xaml.cs",

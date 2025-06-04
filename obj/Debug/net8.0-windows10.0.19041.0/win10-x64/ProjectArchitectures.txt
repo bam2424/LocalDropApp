@@ -1,1 +1,0 @@
-C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\LocalDropApp.csproj;x64

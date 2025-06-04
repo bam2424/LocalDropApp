@@ -43,3 +43,4 @@ Guidelines for creating and managing task lists in markdown files to track proje
    - path/to/file1.ts - Description of purpose
    - path/to/file2.ts - Description of purpose
 
+3. Write the code as if the guy who ends up maintaining yor code will be a violent psychopath who knows where you live.

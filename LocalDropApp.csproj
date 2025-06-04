@@ -39,6 +39,12 @@
 		
 		<!-- Enable unpackaged Windows deployment for single-file publishing -->
 		<WindowsPackageType Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">None</WindowsPackageType>
+		
+		<!-- Enhanced publishing configuration for standalone deployment -->
+		<IncludeNativeLibrariesForSelfExtract Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">true</IncludeNativeLibrariesForSelfExtract>
+		<PublishTrimmed Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">false</PublishTrimmed>
+		<PublishReadyToRun Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">false</PublishReadyToRun>
+		<IncludeAllContentForSelfExtract Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">true</IncludeAllContentForSelfExtract>
 	</PropertyGroup>
 
 	<ItemGroup>

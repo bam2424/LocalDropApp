@@ -3,10 +3,6 @@
     "Windows Machine": {
       "commandName": "Project",
       "nativeDebugging": false
-    },
-    "Windows Machine (Debug)": {
-      "commandName": "Project",
-      "nativeDebugging": true
     }
   }
 }
