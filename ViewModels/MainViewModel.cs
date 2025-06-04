@@ -2,13 +2,17 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LocalDropApp.Models;
+using LocalDropApp.Services;
 
 namespace LocalDropApp.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
+    private readonly IPeerDiscoveryService _peerDiscoveryService;
+    private readonly IFileTransferService _fileTransferService;
+
     [ObservableProperty]
-    private string _deviceName = Environment.MachineName;
+    private string _deviceName = GenerateInstanceDeviceName();
 
     [ObservableProperty]
     private bool _isDiscovering;
@@ -17,62 +21,97 @@ public partial class MainViewModel : ObservableObject
     private string _statusMessage = "Ready to discover peers...";
 
     [ObservableProperty]
-    private PeerDevice? _selectedPeer;
+    [NotifyPropertyChangedFor(nameof(CanSendFiles))]
+    private bool _hasSelectedFiles;
 
     [ObservableProperty]
-    private bool _hasSelectedFiles;
+    [NotifyPropertyChangedFor(nameof(CanSendFiles))]
+    private PeerDevice? _selectedPeer;
+
+    public bool CanSendFiles => SelectedPeer != null && HasSelectedFiles;
 
     public ObservableCollection<PeerDevice> DiscoveredPeers { get; } = new();
     public ObservableCollection<FileTransfer> ActiveTransfers { get; } = new();
     public ObservableCollection<FileTransfer> TransferHistory { get; } = new();
     public ObservableCollection<string> SelectedFiles { get; } = new();
 
-    public MainViewModel()
+    public MainViewModel(IPeerDiscoveryService peerDiscoveryService, IFileTransferService fileTransferService)
     {
-        // Initialize with some mock data for UI development
-        InitializeMockData();
+        _peerDiscoveryService = peerDiscoveryService;
+        _fileTransferService = fileTransferService;
+        
+        InitializeServices();
+    }
+
+    private static string GenerateInstanceDeviceName()
+    {
+        var baseName = Environment.MachineName;
+        
+        // Get all processes with the same name as the current process
+        var currentProcessName = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
+        var processes = System.Diagnostics.Process.GetProcessesByName(currentProcessName);
+        
+        // If this is the first instance, use the base name
+        if (processes.Length <= 1)
+        {
+            return baseName;
+        }
+        
+        // Otherwise, use the base name + instance number
+        // We use the process ID to ensure consistent naming across runs
+        var currentProcessId = System.Diagnostics.Process.GetCurrentProcess().Id;
+        var sortedProcessIds = processes.Select(p => p.Id).OrderBy(id => id).ToArray();
+        var instanceIndex = Array.IndexOf(sortedProcessIds, currentProcessId);
+        
+        return instanceIndex == 0 ? baseName : $"{baseName}{instanceIndex + 1}";
     }
 
     [RelayCommand]
     private async Task StartDiscovery()
     {
-        IsDiscovering = true;
-        StatusMessage = "Discovering peers...";
-
-        // TODO: Implement actual peer discovery
-        await Task.Delay(2000); // Simulate discovery time
-
-        // Add mock discovered peer
-        var mockPeer = new PeerDevice
+        if (_peerDiscoveryService.IsRunning)
         {
-            Name = "John's MacBook",
-            IpAddress = "192.168.1.105",
-            IsOnline = true,
-            LastSeen = DateTime.Now
-        };
-
-        if (!DiscoveredPeers.Any(p => p.IpAddress == mockPeer.IpAddress))
-        {
-            DiscoveredPeers.Add(mockPeer);
+            await _peerDiscoveryService.RefreshPeersAsync();
+            StatusMessage = "Refreshing peer list...";
+            return;
         }
 
-        IsDiscovering = false;
-        StatusMessage = $"Found {DiscoveredPeers.Count} peer(s)";
+        try
+        {
+            IsDiscovering = true;
+            StatusMessage = "Starting discovery...";
+            
+            await _peerDiscoveryService.StartAsync(DeviceName, _fileTransferService.ListenPort);
+            StatusMessage = "Discovering peers...";
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = $"Failed to start discovery: {ex.Message}";
+            IsDiscovering = false;
+        }
     }
 
     [RelayCommand]
-    private void SelectFiles()
+    private async Task SelectFiles()
     {
         try
         {
-            // TODO: Implement actual file picker
-            // For now, simulate file selection
-            SelectedFiles.Clear();
-            SelectedFiles.Add("Document.pdf");
-            SelectedFiles.Add("Image.jpg");
-            
-            HasSelectedFiles = SelectedFiles.Count > 0;
-            StatusMessage = $"Selected {SelectedFiles.Count} file(s)";
+            var result = await FilePicker.PickMultipleAsync(new PickOptions
+            {
+                PickerTitle = "Select files to send"
+            });
+
+            if (result != null)
+            {
+                SelectedFiles.Clear();
+                foreach (var file in result)
+                {
+                    SelectedFiles.Add(file.FullPath);
+                }
+                
+                HasSelectedFiles = SelectedFiles.Count > 0;
+                StatusMessage = $"Selected {SelectedFiles.Count} file(s)";
+            }
         }
         catch (Exception ex)
         {
@@ -81,7 +120,7 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void SendFiles()
+    private async Task SendFiles()
     {
         if (SelectedPeer == null || !HasSelectedFiles)
         {
@@ -91,28 +130,13 @@ public partial class MainViewModel : ObservableObject
 
         try
         {
-            // Create transfer objects for each selected file
-            foreach (var fileName in SelectedFiles)
+            StatusMessage = $"Starting transfer to {SelectedPeer.Name}...";
+            
+            foreach (var filePath in SelectedFiles.ToList())
             {
-                var transfer = new FileTransfer
-                {
-                    FileName = fileName,
-                    FileSize = Random.Shared.Next(1024 * 1024, 100 * 1024 * 1024), // Random size 1MB-100MB
-                    Direction = TransferDirection.Sending,
-                    TargetPeer = SelectedPeer,
-                    Status = TransferStatus.Pending,
-                    StartTime = DateTime.Now
-                };
-
-                ActiveTransfers.Add(transfer);
+                await _fileTransferService.SendFileAsync(filePath, SelectedPeer);
             }
-
-            StatusMessage = $"Started sending {SelectedFiles.Count} file(s) to {SelectedPeer.Name}";
             
-            // Simulate transfer progress
-            _ = Task.Run(async () => await SimulateTransferProgress());
-            
-            // Clear selected files
             SelectedFiles.Clear();
             HasSelectedFiles = false;
         }
@@ -130,83 +154,170 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void RefreshPeers()
+    private async Task RefreshPeers()
     {
-        _ = Task.Run(StartDiscovery);
+        await StartDiscovery();
     }
 
     [RelayCommand]
-    private void RemoveSelectedFile(string fileName)
+    private void RemoveSelectedFile(string filePath)
     {
-        SelectedFiles.Remove(fileName);
+        SelectedFiles.Remove(filePath);
         HasSelectedFiles = SelectedFiles.Count > 0;
         StatusMessage = HasSelectedFiles ? $"{SelectedFiles.Count} file(s) selected" : "No files selected";
     }
 
-    private async Task SimulateTransferProgress()
+    private void InitializeServices()
     {
-        var activeTransfers = ActiveTransfers.ToList();
-        
-        foreach (var transfer in activeTransfers)
+        _peerDiscoveryService.PeerDiscovered += OnPeerDiscovered;
+        _peerDiscoveryService.PeerLost += OnPeerLost;
+        _peerDiscoveryService.PeerUpdated += OnPeerUpdated;
+        _peerDiscoveryService.DiscoveryError += OnDiscoveryError;
+
+        _fileTransferService.TransferStarted += OnTransferStarted;
+        _fileTransferService.TransferProgressUpdated += OnTransferProgressUpdated;
+        _fileTransferService.TransferCompleted += OnTransferCompleted;
+        _fileTransferService.TransferFailed += OnTransferFailed;
+        _fileTransferService.IncomingTransferRequest += OnIncomingTransferRequest;
+        _fileTransferService.TransferError += OnTransferError;
+
+        _ = Task.Run(async () =>
         {
-            transfer.Status = TransferStatus.InProgress;
-            
-            // Simulate progress
-            for (int progress = 0; progress <= 100; progress += 5)
-            {
-                transfer.BytesTransferred = (long)(transfer.FileSize * (progress / 100.0));
-                
-                // Simulate estimated time remaining
-                if (progress > 0)
-                {
-                    var elapsed = DateTime.Now - transfer.StartTime;
-                    var totalEstimated = TimeSpan.FromTicks(elapsed.Ticks * 100 / progress);
-                    transfer.EstimatedTimeRemaining = totalEstimated - elapsed;
-                }
-                
-                await Task.Delay(200); // Simulate transfer time
-            }
-            
-            transfer.Status = TransferStatus.Completed;
-            transfer.EstimatedTimeRemaining = TimeSpan.Zero;
-            
-            // Move to history
-            TransferHistory.Insert(0, transfer);
-            ActiveTransfers.Remove(transfer);
-        }
-        
-        StatusMessage = "All transfers completed successfully";
+            await _fileTransferService.StartListeningAsync();
+            StatusMessage = $"Ready - Listening on port {_fileTransferService.ListenPort}";
+        });
     }
 
-    private void InitializeMockData()
+    private void OnPeerDiscovered(object? sender, PeerDevice peer)
     {
-        // Add some mock peers for UI development
-        DiscoveredPeers.Add(new PeerDevice
+        MainThread.BeginInvokeOnMainThread(() =>
         {
-            Name = "Sarah's iPhone",
-            IpAddress = "192.168.1.102",
-            IsOnline = true,
-            LastSeen = DateTime.Now.AddMinutes(-2)
+            if (!DiscoveredPeers.Any(p => p.Id == peer.Id))
+            {
+                DiscoveredPeers.Add(peer);
+                StatusMessage = $"Found {DiscoveredPeers.Count} peer(s)";
+                IsDiscovering = false;
+            }
         });
+    }
 
-        DiscoveredPeers.Add(new PeerDevice
+    private void OnPeerLost(object? sender, PeerDevice peer)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
         {
-            Name = "Office Desktop",
-            IpAddress = "192.168.1.150",
-            IsOnline = false,
-            LastSeen = DateTime.Now.AddHours(-1)
+            var existingPeer = DiscoveredPeers.FirstOrDefault(p => p.Id == peer.Id);
+            if (existingPeer != null)
+            {
+                DiscoveredPeers.Remove(existingPeer);
+                StatusMessage = $"Peer {peer.Name} disconnected";
+            }
         });
+    }
 
-        // Add some mock transfer history
-        TransferHistory.Add(new FileTransfer
+    private void OnPeerUpdated(object? sender, PeerDevice peer)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
         {
-            FileName = "Presentation.pptx",
-            FileSize = 15 * 1024 * 1024,
-            BytesTransferred = 15 * 1024 * 1024,
-            Status = TransferStatus.Completed,
-            Direction = TransferDirection.Sending,
-            StartTime = DateTime.Now.AddMinutes(-10),
-            TargetPeer = DiscoveredPeers.First()
+            var existingPeer = DiscoveredPeers.FirstOrDefault(p => p.Id == peer.Id);
+            if (existingPeer != null)
+            {
+                existingPeer.Name = peer.Name;
+                existingPeer.IpAddress = peer.IpAddress;
+                existingPeer.IsOnline = peer.IsOnline;
+                existingPeer.LastSeen = peer.LastSeen;
+            }
         });
+    }
+
+    private void OnDiscoveryError(object? sender, string error)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            StatusMessage = $"Discovery error: {error}";
+            IsDiscovering = false;
+        });
+    }
+
+    private void OnTransferStarted(object? sender, FileTransfer transfer)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            ActiveTransfers.Add(transfer);
+            StatusMessage = $"Started {transfer.Direction.ToString().ToLower()} {transfer.FileName}";
+        });
+    }
+
+    private void OnTransferProgressUpdated(object? sender, FileTransfer transfer)
+    {
+        // UI already bound to transfer properties via INotifyPropertyChanged
+    }
+
+    private void OnTransferCompleted(object? sender, FileTransfer transfer)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            ActiveTransfers.Remove(transfer);
+            TransferHistory.Insert(0, transfer);
+            StatusMessage = $"Completed {transfer.FileName}";
+        });
+    }
+
+    private void OnTransferFailed(object? sender, FileTransfer transfer)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            ActiveTransfers.Remove(transfer);
+            TransferHistory.Insert(0, transfer);
+            StatusMessage = $"Failed: {transfer.FileName} - {transfer.ErrorMessage}";
+        });
+    }
+
+    private void OnIncomingTransferRequest(object? sender, FileTransferRequestPayload request)
+    {
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            var accept = await Application.Current!.MainPage!.DisplayAlert(
+                "Incoming File",
+                $"Receive '{request.FileName}' ({FormatFileSize(request.FileSize)})?",
+                "Accept",
+                "Decline");
+
+            if (accept)
+            {
+                var downloadPath = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                    "LocalDropApp Downloads",
+                    request.FileName);
+
+                await _fileTransferService.AcceptIncomingTransferAsync(request.TransferId, downloadPath);
+            }
+            else
+            {
+                await _fileTransferService.RejectIncomingTransferAsync(request.TransferId, "User declined");
+            }
+        });
+    }
+
+    private void OnTransferError(object? sender, string error)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            StatusMessage = $"Transfer error: {error}";
+        });
+    }
+
+    private static string FormatFileSize(long bytes)
+    {
+        string[] sizes = { "B", "KB", "MB", "GB", "TB" };
+        int order = 0;
+        double size = bytes;
+
+        while (size >= 1024 && order < sizes.Length - 1)
+        {
+            order++;
+            size /= 1024;
+        }
+
+        return $"{size:0.##} {sizes[order]}";
     }
 } 

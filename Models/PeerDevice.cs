@@ -8,6 +8,7 @@ public class PeerDevice : INotifyPropertyChanged
     private string _ipAddress = string.Empty;
     private bool _isOnline;
     private DateTime _lastSeen;
+    private int _port;
 
     public string Id { get; set; } = Guid.NewGuid().ToString();
     
@@ -50,6 +51,16 @@ public class PeerDevice : INotifyPropertyChanged
         {
             _lastSeen = value;
             OnPropertyChanged(nameof(LastSeen));
+        }
+    }
+
+    public int Port
+    {
+        get => _port;
+        set
+        {
+            _port = value;
+            OnPropertyChanged(nameof(Port));
         }
     }
 

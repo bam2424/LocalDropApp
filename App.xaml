@@ -16,6 +16,7 @@
             <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
             <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
             <converters:EqualConverter x:Key="EqualConverter" />
+            <converters:PathToFilenameConverter x:Key="PathToFilenameConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

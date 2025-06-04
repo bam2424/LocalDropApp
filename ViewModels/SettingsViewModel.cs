@@ -91,8 +91,9 @@ public class SettingsViewModel : INotifyPropertyChanged
             // In real implementation, save to preferences/database
             await Task.Delay(500); // Simulate save operation
 
-            // Save to preferences
-            Preferences.Set("DeviceName", Settings.DeviceName);
+            // Save to preferences - use instance-specific keys for testing
+            var instanceId = System.Diagnostics.Process.GetCurrentProcess().Id.ToString();
+            Preferences.Set($"DeviceName_{instanceId}", Settings.DeviceName);
             Preferences.Set("DiscoveryPort", Settings.DiscoveryPort);
             Preferences.Set("TransferPort", Settings.TransferPort);
             Preferences.Set("DownloadPath", Settings.DownloadPath);
@@ -249,6 +250,29 @@ public class SettingsViewModel : INotifyPropertyChanged
         }
     }
 
+    private static string GenerateInstanceDeviceName()
+    {
+        var baseName = Environment.MachineName;
+        
+        // Get all processes with the same name as the current process
+        var currentProcessName = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
+        var processes = System.Diagnostics.Process.GetProcessesByName(currentProcessName);
+        
+        // If this is the first instance, use the base name
+        if (processes.Length <= 1)
+        {
+            return baseName;
+        }
+        
+        // Otherwise, use the base name + instance number
+        // We use the process ID to ensure consistent naming across runs
+        var currentProcessId = System.Diagnostics.Process.GetCurrentProcess().Id;
+        var sortedProcessIds = processes.Select(p => p.Id).OrderBy(id => id).ToArray();
+        var instanceIndex = Array.IndexOf(sortedProcessIds, currentProcessId);
+        
+        return instanceIndex == 0 ? baseName : $"{baseName}{instanceIndex + 1}";
+    }
+
     private bool ValidateSettings()
     {
         if (string.IsNullOrWhiteSpace(Settings.DeviceName))
@@ -290,8 +314,20 @@ public class SettingsViewModel : INotifyPropertyChanged
         {
             Settings.PropertyChanged -= OnSettingsPropertyChanged;
 
-            // Load from preferences
-            Settings.DeviceName = Preferences.Get("DeviceName", Environment.MachineName);
+            // Load from preferences - use clean instance-based naming
+            var instanceId = System.Diagnostics.Process.GetCurrentProcess().Id.ToString();
+            var defaultName = GenerateInstanceDeviceName();
+            var savedName = Preferences.Get($"DeviceName_{instanceId}", defaultName);
+            
+            // If the saved name looks like the old GUID format, replace it with the new clean name
+            if (savedName.Contains('-') && savedName.Length > Environment.MachineName.Length + 10)
+            {
+                savedName = defaultName;
+                // Save the new clean name immediately
+                Preferences.Set($"DeviceName_{instanceId}", defaultName);
+            }
+            
+            Settings.DeviceName = savedName;
             Settings.DiscoveryPort = Preferences.Get("DiscoveryPort", 8080);
             Settings.TransferPort = Preferences.Get("TransferPort", 8081);
             Settings.DownloadPath = Preferences.Get("DownloadPath", Settings.DownloadPath);

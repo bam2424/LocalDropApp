@@ -325,7 +325,7 @@
                                                 TextColor="{StaticResource Warning}"
                                                 WidthRequest="32"
                                                 HeightRequest="32"
-                                                FontSize="12"
+                                                FontSize="12" 
                                                 Padding="0"
                                                 IsVisible="{Binding Status, Converter={StaticResource EqualConverter}, ConverterParameter={x:Static models:TransferStatus.Failed}}" />
                                                 

@@ -20,13 +20,15 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        // Register services first
+        // Register services first - networking services must be singletons
         builder.Services.AddSingleton<ThemeService>();
+        builder.Services.AddSingleton<IPeerDiscoveryService, PeerDiscoveryService>();
+        builder.Services.AddSingleton<IFileTransferService, FileTransferService>();
         
         // Register ViewModels that might depend on services
-        builder.Services.AddSingleton<MainViewModel>();
-        builder.Services.AddSingleton<HistoryViewModel>();
-        builder.Services.AddSingleton<SettingsViewModel>();
+        builder.Services.AddTransient<MainViewModel>();
+        builder.Services.AddTransient<HistoryViewModel>();
+        builder.Services.AddTransient<SettingsViewModel>();
         
         // Register Pages and App
         builder.Services.AddSingleton<MainPage>();
