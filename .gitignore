@@ -6,4 +6,12 @@ obj/
 *.suo
 *.cache
 *.log
-*.md
+
+# Development documentation (not for GitHub)
+BUILD.md
+TASKS.md
+TESTING_GUIDE.md
+TROUBLESHOOTING.md
+
+# Build tool source (keep only the exe)
+BuildTool/

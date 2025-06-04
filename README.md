@@ -49,21 +49,21 @@ LocalDropApp/
 - Xcode for iOS development (macOS)
 - Android SDK for Android development
 
-### **Running the Application**
+### **Building Standalone Executable**
 
-1. **Clone & Open**
-   ```bash
-   git clone <repository-url>
-   cd LocalDropApp
-   ```
+1. **Download and Extract**
+   - Download the source code
+   - Extract to a folder
 
-2. **Open in Visual Studio 2022**
-   - Open `LocalDropApp.sln`
+2. **Build Distribution Version**
+   - Double-click `BuildLocalDropApp.exe`
+   - Wait for the build to complete
+   - Find the ready-to-distribute executable in `./release/LocalDropApp.exe`
+
+3. **Development in Visual Studio**
+   - Open `LocalDropApp.sln` in Visual Studio 2022
    - Select target platform (Windows Machine, Android, iOS)
-
-3. **Build & Run**
-   - Press `F5` or click "Start Debugging"
-   - The app will launch with mock data to demonstrate UI functionality
+   - Press `F5` to run with mock data
 
 ### **Available Commands**
 ```bash
