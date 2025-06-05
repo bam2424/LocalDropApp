@@ -12,7 +12,8 @@ public class SettingsViewModel : INotifyPropertyChanged
 {
     private readonly ThemeService _themeService;
     private AppSettings _settings = new();
-    private bool _isLoading;
+    private bool _isTestingConnection;
+    private bool _isSavingSettings;
     private bool _hasUnsavedChanges;
 
     public AppSettings Settings
@@ -21,16 +22,57 @@ public class SettingsViewModel : INotifyPropertyChanged
         set { _settings = value; OnPropertyChanged(); }
     }
 
-    public bool IsLoading
+    public bool IsTestingConnection
     {
-        get => _isLoading;
-        set { _isLoading = value; OnPropertyChanged(); }
+        get => _isTestingConnection;
+        set 
+        { 
+            _isTestingConnection = value; 
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(TestButtonText));
+            OnPropertyChanged(nameof(TestButtonBackgroundColor));
+        }
+    }
+
+    public bool IsSavingSettings
+    {
+        get => _isSavingSettings;
+        set 
+        { 
+            _isSavingSettings = value; 
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(SaveButtonText));
+            OnPropertyChanged(nameof(SaveButtonBackgroundColor));
+        }
     }
 
     public bool HasUnsavedChanges
     {
         get => _hasUnsavedChanges;
-        set { _hasUnsavedChanges = value; OnPropertyChanged(); }
+        set 
+        { 
+            _hasUnsavedChanges = value; 
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(TestButtonText));
+            OnPropertyChanged(nameof(TestButtonBackgroundColor));
+            OnPropertyChanged(nameof(SaveButtonText));
+            OnPropertyChanged(nameof(SaveButtonBackgroundColor));
+        }
+    }
+
+    // Button text and color properties
+    public string TestButtonText => IsTestingConnection ? "⏳ Testing..." : "🔍 Test";
+    public Color TestButtonBackgroundColor => IsTestingConnection ? Colors.Gray : Color.FromArgb("#512BD4");
+    
+    public string SaveButtonText => IsSavingSettings ? "💾 Saving..." : (HasUnsavedChanges ? "💾 Save" : "✅ Saved");
+    public Color SaveButtonBackgroundColor 
+    {
+        get 
+        {
+            if (IsSavingSettings) return Colors.Gray;
+            if (!HasUnsavedChanges) return Color.FromArgb("#2E7D32"); // Green when saved
+            return Color.FromArgb("#512BD4"); // Blue when there are changes to save
+        }
     }
 
     public List<string> ThemeOptions { get; } = new() { "System Default", "Light Mode", "Dark Mode" };
@@ -78,7 +120,7 @@ public class SettingsViewModel : INotifyPropertyChanged
 
     private async Task SaveSettings()
     {
-        IsLoading = true;
+        IsSavingSettings = true;
 
         try
         {
@@ -124,7 +166,7 @@ public class SettingsViewModel : INotifyPropertyChanged
         }
         finally
         {
-            IsLoading = false;
+            IsSavingSettings = false;
         }
     }
 
@@ -169,7 +211,7 @@ public class SettingsViewModel : INotifyPropertyChanged
 
     private async Task TestConnection()
     {
-        IsLoading = true;
+        IsTestingConnection = true;
 
         try
         {
@@ -197,7 +239,7 @@ public class SettingsViewModel : INotifyPropertyChanged
         }
         finally
         {
-            IsLoading = false;
+            IsTestingConnection = false;
         }
     }
 
@@ -349,7 +391,7 @@ public class SettingsViewModel : INotifyPropertyChanged
             Settings.KeepHistoryDays = Preferences.Get("KeepHistoryDays", 30);
 
             Settings.PropertyChanged += OnSettingsPropertyChanged;
-            HasUnsavedChanges = false;
+            HasUnsavedChanges = true; // Start with enabled save button to allow saving default settings
         }
         catch (Exception ex)
         {

@@ -84,7 +84,7 @@
                                 <Button Grid.Column="1"
                                         Text="📁"
                                         Command="{Binding BrowseFolderCommand}"
-                                        BackgroundColor="{StaticResource Primary}"
+                                        BackgroundColor="#512BD4"
                                         TextColor="White"
                                         CornerRadius="8"
                                         WidthRequest="40"
@@ -143,21 +143,13 @@
                                FontAttributes="Bold" 
                                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
                         <Button Grid.Column="1"
-                                Text="🔍 Test"
+                                Text="{Binding TestButtonText}"
+                                BackgroundColor="{Binding TestButtonBackgroundColor}"
                                 Command="{Binding TestConnectionCommand}"
-                                BackgroundColor="{StaticResource Primary}"
                                 TextColor="White"
                                 CornerRadius="8"
                                 Padding="12,6"
-                                FontSize="12">
-                            <Button.Triggers>
-                                <DataTrigger TargetType="Button" Binding="{Binding IsLoading}" Value="True">
-                                    <Setter Property="Text" Value="⏳ Testing..." />
-                                    <Setter Property="IsEnabled" Value="False" />
-                                    <Setter Property="BackgroundColor" Value="{StaticResource Gray400}" />
-                                </DataTrigger>
-                            </Button.Triggers>
-                        </Button>
+                                FontSize="12" />
                     </Grid>
                     
                     <StackLayout Grid.Row="1" Spacing="16">
@@ -535,26 +527,14 @@
             <!-- Action Buttons -->
             <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
                 <Button Grid.Column="0"
-                        Text="💾 Save"
+                        Text="{Binding SaveButtonText}"
+                        BackgroundColor="{Binding SaveButtonBackgroundColor}"
                         Command="{Binding SaveSettingsCommand}"
-                        BackgroundColor="{StaticResource Success}"
                         TextColor="White"
                         CornerRadius="12"
                         Padding="0,16"
                         FontSize="16"
-                        FontAttributes="Bold">
-                    <Button.Triggers>
-                        <DataTrigger TargetType="Button" Binding="{Binding IsLoading}" Value="True">
-                            <Setter Property="Text" Value="💾 Saving..." />
-                            <Setter Property="IsEnabled" Value="False" />
-                            <Setter Property="BackgroundColor" Value="{StaticResource Gray400}" />
-                        </DataTrigger>
-                        <DataTrigger TargetType="Button" Binding="{Binding HasUnsavedChanges}" Value="False">
-                            <Setter Property="BackgroundColor" Value="{StaticResource Gray400}" />
-                            <Setter Property="IsEnabled" Value="False" />
-                        </DataTrigger>
-                    </Button.Triggers>
-                </Button>
+                        FontAttributes="Bold" />
                 
                 <Button Grid.Column="1"
                         Text="🔄 Reset"

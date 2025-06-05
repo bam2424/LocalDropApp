@@ -39,8 +39,16 @@ public class HistoryViewModel : INotifyPropertyChanged
     public bool IsLoading
     {
         get => _isLoading;
-        set { _isLoading = value; OnPropertyChanged(); }
+        set 
+        { 
+            _isLoading = value; 
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(RefreshButtonBackgroundColor));
+        }
     }
+
+    // Button properties
+    public Color RefreshButtonBackgroundColor => IsLoading ? Colors.Gray : Color.FromArgb("#512BD4");
 
     public int TotalTransfers
     {

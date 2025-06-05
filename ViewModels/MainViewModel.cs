@@ -14,18 +14,40 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private string _deviceName = GenerateInstanceDeviceName();
 
-    [ObservableProperty]
     private bool _isDiscovering;
+    public bool IsDiscovering 
+    { 
+        get => _isDiscovering; 
+        set 
+        { 
+            if (SetProperty(ref _isDiscovering, value))
+            {
+                System.Diagnostics.Debug.WriteLine($"[DEBUG] IsDiscovering property changed to: {value}");
+                OnPropertyChanged(nameof(DiscoverButtonText));
+                OnPropertyChanged(nameof(DiscoverButtonBackgroundColor));
+            }
+        } 
+    }
+
+    public string DiscoverButtonText => IsDiscovering ? "⏳ Searching..." : "🔍 Discover Peers";
+    public Color DiscoverButtonBackgroundColor => IsDiscovering ? Colors.Gray : Color.FromArgb("#512BD4");
+    
+    public Color SendFilesButtonBackgroundColor => CanSendFiles ? Color.FromArgb("#2E7D32") : Colors.Gray;
+    public Color SendFilesButtonTextColor => CanSendFiles ? Colors.White : Colors.Gray;
 
     [ObservableProperty]
     private string _statusMessage = "Ready to discover peers...";
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSendFiles))]
+    [NotifyPropertyChangedFor(nameof(SendFilesButtonBackgroundColor))]
+    [NotifyPropertyChangedFor(nameof(SendFilesButtonTextColor))]
     private bool _hasSelectedFiles;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSendFiles))]
+    [NotifyPropertyChangedFor(nameof(SendFilesButtonBackgroundColor))]
+    [NotifyPropertyChangedFor(nameof(SendFilesButtonTextColor))]
     private PeerDevice? _selectedPeer;
 
     public bool CanSendFiles => SelectedPeer != null && HasSelectedFiles;
@@ -69,25 +91,47 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private async Task StartDiscovery()
     {
-        if (_peerDiscoveryService.IsRunning)
-        {
-            await _peerDiscoveryService.RefreshPeersAsync();
-            StatusMessage = "Refreshing peer list...";
-            return;
-        }
-
         try
         {
-            IsDiscovering = true;
-            StatusMessage = "Starting discovery...";
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                IsDiscovering = true;
+                System.Diagnostics.Debug.WriteLine($"[DEBUG] IsDiscovering set to TRUE on UI thread");
+            });
             
-            await _peerDiscoveryService.StartAsync(DeviceName, _fileTransferService.ListenPort);
-            StatusMessage = "Discovering peers...";
+            if (_peerDiscoveryService.IsRunning)
+            {
+                await _peerDiscoveryService.RefreshPeersAsync();
+                MainThread.BeginInvokeOnMainThread(() => StatusMessage = "Refreshing peer search...");
+            }
+            else
+            {
+                MainThread.BeginInvokeOnMainThread(() => StatusMessage = "Starting discovery...");
+                await _peerDiscoveryService.StartAsync(DeviceName, _fileTransferService.ListenPort);
+                MainThread.BeginInvokeOnMainThread(() => StatusMessage = "Searching for peers...");
+            }
+            
+            // Keep discovery active for 5 seconds to make hourglass more visible
+            await Task.Delay(5000);
+            
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                IsDiscovering = false;
+                System.Diagnostics.Debug.WriteLine($"[DEBUG] IsDiscovering set to FALSE on UI thread");
+                
+                StatusMessage = _peerDiscoveryService.IsRunning ? 
+                    $"Discovery active - Found {DiscoveredPeers.Count} peer(s)" : 
+                    "Ready to discover peers...";
+            });
         }
         catch (Exception ex)
         {
-            StatusMessage = $"Failed to start discovery: {ex.Message}";
-            IsDiscovering = false;
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                StatusMessage = $"Failed to start discovery: {ex.Message}";
+                IsDiscovering = false;
+                System.Diagnostics.Debug.WriteLine($"[DEBUG] IsDiscovering set to FALSE (exception) on UI thread");
+            });
         }
     }
 
@@ -195,8 +239,9 @@ public partial class MainViewModel : ObservableObject
             if (!DiscoveredPeers.Any(p => p.Id == peer.Id))
             {
                 DiscoveredPeers.Add(peer);
-                StatusMessage = $"Found {DiscoveredPeers.Count} peer(s)";
-                IsDiscovering = false;
+                StatusMessage = IsDiscovering ? 
+                    $"Found {DiscoveredPeers.Count} peer(s) - still searching..." :
+                    $"Found {DiscoveredPeers.Count} peer(s)";
             }
         });
     }
@@ -234,7 +279,8 @@ public partial class MainViewModel : ObservableObject
         MainThread.BeginInvokeOnMainThread(() =>
         {
             StatusMessage = $"Discovery error: {error}";
-            IsDiscovering = false;
+            // Don't interfere with the normal discovery flow
+            System.Diagnostics.Debug.WriteLine($"[DEBUG] Discovery error: {error}");
         });
     }
 

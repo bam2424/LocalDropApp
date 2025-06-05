@@ -40,22 +40,15 @@
                         
                         <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="12">
                             <Button Grid.Column="0"
-                                    Text="🔍 Discover Peers"
+                                    x:Name="DiscoverButton"
+                                    Text="{Binding DiscoverButtonText}"
+                                    BackgroundColor="{Binding DiscoverButtonBackgroundColor}"
                                     Command="{Binding StartDiscoveryCommand}"
-                                    BackgroundColor="{StaticResource Primary}"
                                     TextColor="White"
                                     CornerRadius="12"
                                     Padding="0,16"
                                     FontSize="14"
-                                    FontAttributes="Bold">
-                                <Button.Triggers>
-                                    <DataTrigger TargetType="Button" Binding="{Binding IsDiscovering}" Value="True">
-                                        <Setter Property="Text" Value="🔄 Searching..." />
-                                        <Setter Property="IsEnabled" Value="False" />
-                                        <Setter Property="BackgroundColor" Value="{StaticResource Gray400}" />
-                                    </DataTrigger>
-                                </Button.Triggers>
-                            </Button>
+                                    FontAttributes="Bold" />
                             
                             <Button Grid.Column="1"
                                     Text="📁 Select Files"
@@ -258,21 +251,14 @@
                         <Button Grid.Row="3"
                                 Text="🚀 Send Files" 
                                 Command="{Binding SendFilesCommand}"
-                                BackgroundColor="{StaticResource Success}"
-                                TextColor="White"
+                                BackgroundColor="{Binding SendFilesButtonBackgroundColor}"
+                                TextColor="{Binding SendFilesButtonTextColor}"
                                 CornerRadius="12"
                                 Padding="0,16"
                                 FontSize="16"
                                 FontAttributes="Bold"
                                 Margin="0,8,0,0"
-                                IsEnabled="{Binding CanSendFiles}">
-                            <Button.Triggers>
-                                <DataTrigger TargetType="Button" Binding="{Binding CanSendFiles}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="{StaticResource Gray300}" />
-                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextTertiaryDark}}" />
-                                </DataTrigger>
-                            </Button.Triggers>
-                        </Button>
+                                IsEnabled="{Binding CanSendFiles}" />
                     </Grid>
                 </Border>
             </Grid>

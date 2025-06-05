@@ -20,7 +20,7 @@
             
             <!-- App Icon/Logo -->
             <Border Grid.Row="0"
-                    BackgroundColor="{StaticResource Primary}"
+                    BackgroundColor="#512BD4"
                     WidthRequest="56"
                     HeightRequest="56"
                     StrokeShape="RoundRectangle 12"
@@ -50,20 +50,26 @@
 
     <!-- Flyout Items -->
     <FlyoutItem Title="Dashboard" 
-                Icon="home.png"
                 Route="dashboard">
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="🏠" Color="#512BD4" Size="20" />
+        </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
     </FlyoutItem>
 
     <FlyoutItem Title="Transfer History" 
-                Icon="clock.png"
                 Route="history">
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="📁" Color="#512BD4" Size="20" />
+        </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate views:HistoryPage}" />
     </FlyoutItem>
 
     <FlyoutItem Title="Settings" 
-                Icon="settings.png"
                 Route="settings">
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="⚙️" Color="#512BD4" Size="20" />
+        </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" />
     </FlyoutItem>
 

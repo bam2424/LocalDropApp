@@ -154,23 +154,15 @@
                     </Border>
                     
                     <!-- Refresh Button -->
-                    <Button Grid.Column="2"
-                            Text="🔄"
+                    <Button Text="🔄"
                             Command="{Binding RefreshCommand}"
-                            BackgroundColor="{StaticResource Primary}"
+                            BackgroundColor="{Binding RefreshButtonBackgroundColor}"
                             TextColor="White"
                             CornerRadius="12"
                             WidthRequest="48"
                             HeightRequest="48"
                             FontSize="16"
-                            Padding="0">
-                        <Button.Triggers>
-                            <DataTrigger TargetType="Button" Binding="{Binding IsLoading}" Value="True">
-                                <Setter Property="IsEnabled" Value="False" />
-                                <Setter Property="BackgroundColor" Value="{StaticResource Gray400}" />
-                            </DataTrigger>
-                        </Button.Triggers>
-                    </Button>
+                            Padding="0" />
                 </Grid>
                 
                 <!-- Action Buttons -->
