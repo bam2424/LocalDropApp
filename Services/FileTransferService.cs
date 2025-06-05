@@ -26,6 +26,7 @@ public class FileTransferService : IFileTransferService
     public event EventHandler<FileTransfer>? TransferFailed;
     public event EventHandler<FileTransferRequestPayload>? IncomingTransferRequest;
     public event EventHandler<string>? TransferError;
+    public event EventHandler<(FileTransfer Transfer, string DownloadPath)>? IncomingFileCompleted;
 
     public IReadOnlyList<FileTransfer> ActiveTransfers => _activeTransfers.Values.ToList();
     public bool IsListening => _isListening;
@@ -367,7 +368,8 @@ public class FileTransferService : IFileTransferService
             FileSize = request.FileSize,
             Direction = TransferDirection.Receiving,
             Status = TransferStatus.InProgress,
-            StartTime = DateTime.UtcNow
+            StartTime = DateTime.UtcNow,
+            DownloadPath = downloadPath
         };
 
         _activeTransfers.TryAdd(request.TransferId, transfer);
@@ -398,6 +400,12 @@ public class FileTransferService : IFileTransferService
 
             transfer.Status = TransferStatus.Completed;
             TransferCompleted?.Invoke(this, transfer);
+            
+            // Fire special event for incoming files with download path
+            if (transfer.Direction == TransferDirection.Receiving)
+            {
+                IncomingFileCompleted?.Invoke(this, (transfer, downloadPath));
+            }
         }
         catch (Exception ex)
         {

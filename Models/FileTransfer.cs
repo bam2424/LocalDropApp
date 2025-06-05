@@ -27,6 +27,7 @@ public class FileTransfer : INotifyPropertyChanged
     private string _errorMessage = string.Empty;
     private DateTime _startTime;
     private TimeSpan _estimatedTimeRemaining;
+    private string _downloadPath = string.Empty;
 
     public string Id { get; set; } = Guid.NewGuid().ToString();
     
@@ -117,6 +118,16 @@ public class FileTransfer : INotifyPropertyChanged
             _estimatedTimeRemaining = value;
             OnPropertyChanged(nameof(EstimatedTimeRemaining));
             OnPropertyChanged(nameof(EstimatedTimeRemainingText));
+        }
+    }
+
+    public string DownloadPath
+    {
+        get => _downloadPath;
+        set
+        {
+            _downloadPath = value;
+            OnPropertyChanged(nameof(DownloadPath));
         }
     }
 

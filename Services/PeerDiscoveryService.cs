@@ -10,8 +10,8 @@ namespace LocalDropApp.Services;
 public class PeerDiscoveryService : IPeerDiscoveryService
 {
     private static int _baseDiscoveryPort = 35731;
-    private const int HEARTBEAT_INTERVAL_MS = 5000;
-    private const int PEER_TIMEOUT_MS = 15000;
+    private const int HEARTBEAT_INTERVAL_MS = 3000; // More frequent heartbeats for better discovery
+    private const int PEER_TIMEOUT_MS = 12000; // Shorter timeout to match faster heartbeat
     
     private readonly ConcurrentDictionary<string, PeerDevice> _discoveredPeers = new();
     private readonly Timer _heartbeatTimer;
@@ -61,6 +61,16 @@ public class PeerDiscoveryService : IPeerDiscoveryService
             
             _isRunning = true;
             
+            // Send multiple discovery messages on startup for better reliability
+            _ = Task.Run(async () =>
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    await SendDiscoveryMessage();
+                    await Task.Delay(500); // 500ms between discovery attempts
+                }
+            });
+            
             // Debug logging
             DiscoveryError?.Invoke(this, $"DEBUG: Started discovery for {_localDeviceName} (ID: {_localDeviceId[..8]}...) on IP {_localIpAddress}, TCP port {_localTcpPort}");
         }
@@ -92,7 +102,13 @@ public class PeerDiscoveryService : IPeerDiscoveryService
     public async Task RefreshPeersAsync()
     {
         if (!_isRunning) return;
-        await SendDiscoveryMessage();
+        
+        // Send multiple discovery messages for better reliability
+        for (int i = 0; i < 3; i++)
+        {
+            await SendDiscoveryMessage();
+            if (i < 2) await Task.Delay(300); // Small delay between attempts
+        }
     }
 
     public PeerDevice GetLocalDevice()
@@ -292,19 +308,81 @@ public class PeerDiscoveryService : IPeerDiscoveryService
     {
         var data = Encoding.UTF8.GetBytes(message.ToJson());
         
-        // Broadcast to a range of ports to reach all instances
-        for (int port = _baseDiscoveryPort; port < _baseDiscoveryPort + 10; port++)
+        // Get all available broadcast addresses for better network coverage
+        var broadcastAddresses = GetBroadcastAddresses();
+        
+        foreach (var broadcastAddr in broadcastAddresses)
         {
-            try
+            // Broadcast to a range of ports to reach all instances
+            for (int port = _baseDiscoveryPort; port < _baseDiscoveryPort + 10; port++)
             {
-                var broadcastEndpoint = new IPEndPoint(IPAddress.Broadcast, port);
-                await _udpBroadcaster!.SendAsync(data, data.Length, broadcastEndpoint);
-            }
-            catch
-            {
-                // Ignore send errors for individual ports
+                try
+                {
+                    var broadcastEndpoint = new IPEndPoint(broadcastAddr, port);
+                    await _udpBroadcaster!.SendAsync(data, data.Length, broadcastEndpoint);
+                }
+                catch
+                {
+                    // Ignore send errors for individual ports/addresses
+                }
             }
         }
+    }
+
+    private List<IPAddress> GetBroadcastAddresses()
+    {
+        var broadcastAddresses = new List<IPAddress> { IPAddress.Broadcast }; // 255.255.255.255
+        
+        try
+        {
+            var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces()
+                .Where(ni => ni.OperationalStatus == OperationalStatus.Up 
+                           && ni.NetworkInterfaceType != NetworkInterfaceType.Loopback
+                           && ni.NetworkInterfaceType != NetworkInterfaceType.Tunnel);
+
+            foreach (var networkInterface in networkInterfaces)
+            {
+                var ipProperties = networkInterface.GetIPProperties();
+                var unicastAddresses = ipProperties.UnicastAddresses
+                    .Where(ua => ua.Address.AddressFamily == AddressFamily.InterNetwork
+                               && !IPAddress.IsLoopback(ua.Address));
+
+                foreach (var unicastAddress in unicastAddresses)
+                {
+                    try
+                    {
+                        // Calculate broadcast address for this subnet
+                        var ip = unicastAddress.Address.GetAddressBytes();
+                        var mask = unicastAddress.IPv4Mask?.GetAddressBytes();
+                        
+                        if (mask != null && mask.Length == 4)
+                        {
+                            var broadcast = new byte[4];
+                            for (int i = 0; i < 4; i++)
+                            {
+                                broadcast[i] = (byte)(ip[i] | ~mask[i]);
+                            }
+                            
+                            var broadcastAddr = new IPAddress(broadcast);
+                            if (!broadcastAddresses.Contains(broadcastAddr))
+                            {
+                                broadcastAddresses.Add(broadcastAddr);
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        // Skip this interface if we can't calculate broadcast
+                    }
+                }
+            }
+        }
+        catch
+        {
+            // If anything fails, we still have the global broadcast
+        }
+        
+        return broadcastAddresses;
     }
 
     private NetworkMessage CreateNetworkMessage(MessageType type)

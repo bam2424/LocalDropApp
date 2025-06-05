@@ -10,6 +10,7 @@ public interface IFileTransferService : IDisposable
     event EventHandler<FileTransfer>? TransferFailed;
     event EventHandler<FileTransferRequestPayload>? IncomingTransferRequest;
     event EventHandler<string>? TransferError;
+    event EventHandler<(FileTransfer Transfer, string DownloadPath)>? IncomingFileCompleted;
 
     IReadOnlyList<FileTransfer> ActiveTransfers { get; }
     bool IsListening { get; }

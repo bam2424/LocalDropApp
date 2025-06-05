@@ -224,6 +224,7 @@ public partial class MainViewModel : ObservableObject
         _fileTransferService.TransferFailed += OnTransferFailed;
         _fileTransferService.IncomingTransferRequest += OnIncomingTransferRequest;
         _fileTransferService.TransferError += OnTransferError;
+        _fileTransferService.IncomingFileCompleted += OnIncomingFileCompleted;
 
         _ = Task.Run(async () =>
         {
@@ -350,6 +351,80 @@ public partial class MainViewModel : ObservableObject
         {
             StatusMessage = $"Transfer error: {error}";
         });
+    }
+
+    private void OnIncomingFileCompleted(object? sender, (FileTransfer Transfer, string DownloadPath) e)
+    {
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            var transfer = e.Transfer;
+            var downloadPath = e.DownloadPath;
+            var folderPath = Path.GetDirectoryName(downloadPath);
+
+            var result = await Application.Current!.MainPage!.DisplayAlert(
+                "File Received! 📁",
+                $"'{transfer.FileName}' has been saved successfully!\n\n" +
+                $"📍 Location: {folderPath}\n\n" +
+                $"Would you like to open the folder?",
+                "Open Folder",
+                "Close");
+
+            if (result)
+            {
+                try
+                {
+                    // Open the folder containing the downloaded file
+                    await OpenFolderAsync(folderPath!);
+                }
+                catch (Exception ex)
+                {
+                    await Application.Current.MainPage.DisplayAlert(
+                        "Error",
+                        $"Could not open folder: {ex.Message}",
+                        "OK");
+                }
+            }
+        });
+    }
+
+    private async Task OpenFolderAsync(string folderPath)
+    {
+        try
+        {
+#if WINDOWS
+            System.Diagnostics.Process.Start("explorer.exe", folderPath);
+#elif MACCATALYST
+            System.Diagnostics.Process.Start("open", folderPath);
+#elif ANDROID
+            // Android doesn't have a simple way to open file manager to specific folder
+            // We could use an intent, but for now just show a message
+            await Application.Current!.MainPage!.DisplayAlert(
+                "Folder Location",
+                $"File saved to: {folderPath}",
+                "OK");
+#elif IOS
+            // iOS doesn't allow opening arbitrary folders
+            await Application.Current!.MainPage!.DisplayAlert(
+                "File Saved",
+                $"File saved to: {folderPath}",
+                "OK");
+#else
+            // Generic fallback - try to open with default system handler
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = folderPath,
+                UseShellExecute = true
+            });
+#endif
+        }
+        catch (Exception ex)
+        {
+            // If all else fails, just show the path
+            await Application.Current!.MainPage!.DisplayAlert(
+                "Folder Location",
+                $"Could not open folder automatically.\n\nFile saved to: {folderPath}",
+                "OK");
+        }
     }
 
     private static string FormatFileSize(long bytes)
