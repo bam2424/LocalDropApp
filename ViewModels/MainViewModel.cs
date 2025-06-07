@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LocalDropApp.Models;
 using LocalDropApp.Services;
+using Microsoft.Maui.Storage;
 
 namespace LocalDropApp.ViewModels;
 
@@ -226,10 +227,137 @@ public partial class MainViewModel : ObservableObject
         _fileTransferService.TransferError += OnTransferError;
         _fileTransferService.IncomingFileCompleted += OnIncomingFileCompleted;
 
+        // Start services with aggressive firewall prompt triggering
         _ = Task.Run(async () =>
         {
-            await _fileTransferService.StartListeningAsync();
-            StatusMessage = $"Ready - Listening on port {_fileTransferService.ListenPort}";
+            try
+            {
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    StatusMessage = "Starting network services...";
+                });
+                
+                // Force Windows Firewall prompts by creating explicit listeners
+                await ForceFirewallPromptsAndStartServices();
+                
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    StatusMessage = $"✅ Network ready - TCP:{_fileTransferService.ListenPort} UDP:{_peerDiscoveryService.DiscoveryPort} - Click 'Discover Peers' to find devices";
+                });
+            }
+            catch (Exception ex)
+            {
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    StatusMessage = $"Network setup failed: {ex.Message}. Try running as Administrator.";
+                });
+                
+                // Show help if services fail to start
+                await ShowFirewallHelpIfNeeded(ex.Message);
+            }
+        });
+    }
+
+    private async Task ForceFirewallPromptsAndStartServices()
+    {
+        // Create temporary listeners to force Windows Firewall prompts
+        System.Net.Sockets.TcpListener? tempTcpListener = null;
+        System.Net.Sockets.UdpClient? tempUdpClient = null;
+        
+        try
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                StatusMessage = "Requesting network permissions...";
+            });
+            
+            // Create TCP listener on port 35732 - this will force Windows Firewall prompt
+            tempTcpListener = new System.Net.Sockets.TcpListener(System.Net.IPAddress.Any, 35732);
+            tempTcpListener.Start();
+            
+            // Create UDP client on port 35731 - this may trigger another firewall prompt
+            tempUdpClient = new System.Net.Sockets.UdpClient(35731);
+            
+            // Keep them alive for 3 seconds to ensure Windows Firewall prompts appear
+            await Task.Delay(3000);
+            
+            // Close temporary listeners
+            tempTcpListener.Stop();
+            tempUdpClient.Close();
+            
+            // Small delay to ensure ports are released
+            await Task.Delay(500);
+            
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                StatusMessage = "Starting file transfer service...";
+            });
+            
+            // Now start the actual services with detailed diagnostics
+            try
+            {
+                await _fileTransferService.StartListeningAsync();
+                var tcpPort = _fileTransferService.ListenPort;
+                
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    StatusMessage = $"✅ TCP Server started on port {tcpPort} - Ready to receive files";
+                });
+            }
+            catch (Exception tcpEx)
+            {
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    StatusMessage = $"❌ TCP Server failed: {tcpEx.Message}";
+                });
+                throw;
+            }
+            
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                StatusMessage = "Starting peer discovery service...";
+            });
+            
+            try
+            {
+                await _peerDiscoveryService.StartAsync(DeviceName, _fileTransferService.ListenPort);
+                var udpPort = _peerDiscoveryService.DiscoveryPort;
+                
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    StatusMessage = $"✅ Network ready - TCP:{_fileTransferService.ListenPort} UDP:{udpPort} - Ready to send/receive";
+                });
+            }
+            catch (Exception udpEx)
+            {
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    StatusMessage = $"❌ UDP Discovery failed: {udpEx.Message}";
+                });
+                throw;
+            }
+        }
+        catch (Exception ex)
+        {
+            // Clean up in case of error
+            tempTcpListener?.Stop();
+            tempUdpClient?.Close();
+            throw new Exception($"Network setup failed: {ex.Message}. Windows Firewall may be blocking the app.");
+        }
+    }
+
+    private async Task ShowFirewallHelpIfNeeded(string errorMessage)
+    {
+        await MainThread.InvokeOnMainThreadAsync(async () =>
+        {
+            await Application.Current!.MainPage!.DisplayAlert(
+                "Network Permission Needed 🔥",
+                "LocalDrop needs network access to send and receive files.\n\n" +
+                "If you didn't see a Windows Firewall prompt, you may need to:\n\n" +
+                "• Run LocalDrop as Administrator (right-click → 'Run as administrator')\n" +
+                "• Or manually allow it through Windows Firewall settings\n\n" +
+                "Most apps show a Windows permission dialog on first run - if you missed it, try restarting the app as Administrator.",
+                "OK");
         });
     }
 
@@ -331,10 +459,11 @@ public partial class MainViewModel : ObservableObject
 
             if (accept)
             {
-                var downloadPath = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                    "LocalDropApp Downloads",
-                    request.FileName);
+                // Get the download path from user settings
+                var settingsDownloadPath = Preferences.Get("DownloadPath", 
+                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "LocalDrop Downloads"));
+                
+                var downloadPath = Path.Combine(settingsDownloadPath, request.FileName);
 
                 await _fileTransferService.AcceptIncomingTransferAsync(request.TransferId, downloadPath);
             }

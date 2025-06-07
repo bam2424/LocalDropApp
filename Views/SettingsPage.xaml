@@ -75,11 +75,12 @@
                                         BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceBackgroundLight}, Dark={StaticResource SurfaceBackgroundDark}}"
                                         StrokeShape="RoundRectangle 8"
                                         Padding="12,8">
-                                    <Entry Text="{Binding Settings.DownloadPath}"
+                                    <Entry Text="{Binding Settings.DownloadPath, Mode=TwoWay}"
                                            BackgroundColor="Transparent"
                                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                                            FontSize="14"
-                                           IsReadOnly="True" />
+                                           Placeholder="Enter download folder path..."
+                                           IsReadOnly="False" />
                                 </Border>
                                 <Button Grid.Column="1"
                                         Text="📁"
@@ -583,6 +584,16 @@
                         BorderColor="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
                         BorderWidth="1" />
             </Grid>
+            
+            <!-- Network Diagnostics Button -->
+            <Button Text="🔍 Run Network Diagnostics"
+                    Command="{Binding RunNetworkDiagnosticsCommand}"
+                    BackgroundColor="{StaticResource Info}"
+                    TextColor="White"
+                    CornerRadius="12"
+                    Padding="0,16"
+                    FontSize="16"
+                    FontAttributes="Bold" />
         </StackLayout>
     </ScrollView>
 </ContentPage> 

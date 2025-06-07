@@ -6,9 +6,10 @@ using LocalDropApp.Services;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.ApplicationModel;
 
+
 namespace LocalDropApp.ViewModels;
 
-public class SettingsViewModel : INotifyPropertyChanged
+public partial class SettingsViewModel : INotifyPropertyChanged
 {
     private readonly ThemeService _themeService;
     private AppSettings _settings = new();
@@ -116,6 +117,12 @@ public class SettingsViewModel : INotifyPropertyChanged
         {
             ApplyTheme();
         }
+        
+        // Auto-save download path immediately for real-time use in file transfers
+        if (e.PropertyName == nameof(AppSettings.DownloadPath))
+        {
+            Preferences.Set("DownloadPath", Settings.DownloadPath);
+        }
     }
 
     private async Task SaveSettings()
@@ -200,12 +207,67 @@ public class SettingsViewModel : INotifyPropertyChanged
     {
         try
         {
-            // In real implementation, use FolderPicker
-            await Application.Current.MainPage.DisplayAlert("Browse Folder", "Folder picker would open here", "OK");
+            // For now, use a platform-agnostic approach with better user guidance
+            bool useManualInput = await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert(
+                "Select Download Folder 📁",
+                "Would you like to manually type the folder path or browse for a file in the desired folder?",
+                "Type Path",
+                "Browse Files");
+
+            if (useManualInput)
+            {
+                // Let user type the path manually
+                string result = await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayPromptAsync(
+                    "Enter Folder Path",
+                    "Enter the full path to the folder where you want files to be downloaded:",
+                    "OK",
+                    "Cancel",
+                    placeholder: @"C:\Users\YourName\Downloads");
+
+                if (!string.IsNullOrWhiteSpace(result))
+                {
+                    if (Directory.Exists(result))
+                    {
+                        Settings.DownloadPath = result;
+                        await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert(
+                            "Folder Set! 📁",
+                            $"Download folder updated to:\n\n📍 {result}",
+                            "OK");
+                    }
+                    else
+                    {
+                        await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert(
+                            "Invalid Path",
+                            "The folder path doesn't exist. Please check the path and try again.",
+                            "OK");
+                    }
+                }
+            }
+            else
+            {
+                // Use file picker as workaround - improved guidance
+                var pickResult = await FilePicker.PickAsync(new PickOptions
+                {
+                    PickerTitle = "📁 Navigate to your desired folder and select ANY file (or create a new text file)"
+                });
+
+                if (pickResult != null)
+                {
+                    var selectedFolder = Path.GetDirectoryName(pickResult.FullPath);
+                    if (!string.IsNullOrEmpty(selectedFolder) && Directory.Exists(selectedFolder))
+                    {
+                        Settings.DownloadPath = selectedFolder;
+                        await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert(
+                            "Folder Selected! 📁",
+                            $"Download folder updated to:\n\n📍 {selectedFolder}",
+                            "OK");
+                    }
+                }
+            }
         }
         catch (Exception ex)
         {
-            await Application.Current.MainPage.DisplayAlert("Error", $"Failed to browse folder: {ex.Message}", "OK");
+            await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Error", $"Failed to set folder: {ex.Message}", "OK");
         }
     }
 
@@ -424,6 +486,106 @@ public class SettingsViewModel : INotifyPropertyChanged
         "Dark" => Models.AppTheme.Dark,
         _ => Models.AppTheme.System
     };
+
+    [RelayCommand]
+    public async Task RunNetworkDiagnostics()
+    {
+        try
+        {
+            var diagnosticResults = new List<string>();
+            
+            // Check local IP and ports
+            var localIp = GetLocalIpAddress();
+            diagnosticResults.Add($"✅ Local IP Address: {localIp}");
+            
+            // Check UDP discovery port
+            try
+            {
+                using var udpTest = new System.Net.Sockets.UdpClient(35731);
+                diagnosticResults.Add("✅ UDP Discovery Port 35731: Available");
+                udpTest.Close();
+            }
+            catch
+            {
+                diagnosticResults.Add("❌ UDP Discovery Port 35731: In use or blocked");
+            }
+            
+            // Check TCP file transfer port
+            try
+            {
+                using var tcpTest = new System.Net.Sockets.TcpListener(System.Net.IPAddress.Any, 35732);
+                tcpTest.Start();
+                diagnosticResults.Add("✅ TCP File Transfer Port 35732: Available");
+                tcpTest.Stop();
+            }
+            catch
+            {
+                diagnosticResults.Add("❌ TCP File Transfer Port 35732: In use or blocked");
+            }
+            
+            // Check Windows Firewall suggestion
+            diagnosticResults.Add("");
+            diagnosticResults.Add("🔥 FIREWALL CHECK:");
+            diagnosticResults.Add("If your laptop can't send files to this PC,");
+            diagnosticResults.Add("the issue is likely Windows Firewall blocking");
+            diagnosticResults.Add("incoming connections on TCP port 35732.");
+            diagnosticResults.Add("");
+            diagnosticResults.Add("💡 SOLUTION:");
+            diagnosticResults.Add("Add LocalDropApp.exe to Windows Firewall exceptions");
+            diagnosticResults.Add("or temporarily disable Windows Firewall to test.");
+            
+            var results = string.Join("\n", diagnosticResults);
+            
+            await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert(
+                "Network Diagnostics Results 🔍",
+                results,
+                "OK");
+        }
+        catch (Exception ex)
+        {
+            await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert(
+                "Diagnostic Error",
+                $"Failed to run diagnostics: {ex.Message}",
+                "OK");
+        }
+    }
+    
+    private static string GetLocalIpAddress()
+    {
+        try
+        {
+            var networkInterfaces = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
+                .Where(ni => ni.OperationalStatus == System.Net.NetworkInformation.OperationalStatus.Up 
+                           && ni.NetworkInterfaceType != System.Net.NetworkInformation.NetworkInterfaceType.Loopback
+                           && ni.NetworkInterfaceType != System.Net.NetworkInformation.NetworkInterfaceType.Tunnel);
+
+            var allAddresses = new List<string>();
+
+            foreach (var networkInterface in networkInterfaces)
+            {
+                var ipProperties = networkInterface.GetIPProperties();
+                var unicastAddresses = ipProperties.UnicastAddresses
+                    .Where(ua => ua.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork
+                               && !System.Net.IPAddress.IsLoopback(ua.Address))
+                    .Select(ua => ua.Address.ToString())
+                    .ToList();
+
+                allAddresses.AddRange(unicastAddresses);
+            }
+
+            // Prefer private network addresses
+            var privateAddress = allAddresses.FirstOrDefault(addr => 
+                addr.StartsWith("192.168.") || 
+                addr.StartsWith("10.") || 
+                (addr.StartsWith("172.") && int.TryParse(addr.Split('.')[1], out var second) && second >= 16 && second <= 31));
+
+            return privateAddress ?? allAddresses.FirstOrDefault() ?? "127.0.0.1";
+        }
+        catch
+        {
+            return "127.0.0.1";
+        }
+    }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

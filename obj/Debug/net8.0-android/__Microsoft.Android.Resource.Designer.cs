@@ -7,7 +7,7 @@ using System;
 
 namespace LocalDropApp {
 	#pragma warning disable IDE0002
-	public partial class Resource : _Microsoft.Android.Resource.Designer.ResourceConstant {
+	public partial class Resource : _Microsoft.Android.Resource.Designer.Resource {
 	}
 	#pragma warning restore IDE0002
 }

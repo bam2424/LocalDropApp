@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography;
 using LocalDropApp.Models;
+using Microsoft.Maui.ApplicationModel;
 
 namespace LocalDropApp.Services;
 
@@ -217,11 +218,15 @@ public class FileTransferService : IFileTransferService
 
     private async Task AcceptConnectionsAsync()
     {
+        TransferError?.Invoke(this, $"🎯 TCP Server listening on port {_listenPort} - Waiting for incoming connections...");
+        
         while (!_listenerCancellation!.Token.IsCancellationRequested)
         {
             try
             {
+                TransferError?.Invoke(this, "📡 Waiting for incoming connection...");
                 var client = await _tcpListener!.AcceptTcpClientAsync();
+                TransferError?.Invoke(this, $"✅ Incoming connection from {client.Client.RemoteEndPoint}");
                 _ = Task.Run(() => HandleIncomingConnectionAsync(client), _listenerCancellation.Token);
             }
             catch (ObjectDisposedException)
@@ -356,10 +361,11 @@ public class FileTransferService : IFileTransferService
 
     private async Task ReceiveFileDataAsync(NetworkStream stream, FileTransferRequestPayload request)
     {
-        var downloadPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-            "LocalDropApp Downloads",
-            request.FileName);
+        // Get the download path from user settings
+        var settingsDownloadPath = Preferences.Get("DownloadPath", 
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "LocalDrop Downloads"));
+        
+        var downloadPath = Path.Combine(settingsDownloadPath, request.FileName);
 
         var transfer = new FileTransfer
         {
