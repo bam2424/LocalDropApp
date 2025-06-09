@@ -1,0 +1,5 @@
+# This file ensures the images directory is tracked by Git
+# You can delete this file once you add your actual screenshot images:
+# - transfer-statistics.png
+# - main-interface.png  
+# - settings-page.png 
