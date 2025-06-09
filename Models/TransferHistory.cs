@@ -163,4 +163,28 @@ public class TransferHistory : INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+}
+
+public class TransferTrendData
+{
+    public DateTime Date { get; set; }
+    public int TransferCount { get; set; }
+    public long TotalBytes { get; set; }
+    public int SuccessfulCount { get; set; }
+    public int FailedCount { get; set; }
+
+    public string FormattedDate => Date.ToString("MMM dd");
+    
+    public string TotalBytesFormatted
+    {
+        get
+        {
+            if (TotalBytes < 1024) return $"{TotalBytes} B";
+            if (TotalBytes < 1024 * 1024) return $"{TotalBytes / 1024.0:F1} KB";
+            if (TotalBytes < 1024 * 1024 * 1024) return $"{TotalBytes / (1024.0 * 1024.0):F1} MB";
+            return $"{TotalBytes / (1024.0 * 1024.0 * 1024.0):F1} GB";
+        }
+    }
+
+    public double SuccessRate => TransferCount > 0 ? (SuccessfulCount * 100.0 / TransferCount) : 0;
 } 

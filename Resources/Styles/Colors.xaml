@@ -75,6 +75,16 @@
     <Color x:Key="Gray800">#1F2937</Color>
     <Color x:Key="Gray900">#111827</Color>
     <Color x:Key="Gray950">#030712</Color>
+    
+    <!-- Flyout-specific Dynamic Colors -->
+    <Color x:Key="FlyoutBackgroundColorLight">#FFFFFF</Color>
+    <Color x:Key="FlyoutBackgroundColorDark">#1A1D29</Color>
+    <Color x:Key="FlyoutCardBackgroundColorLight">#F1F3F6</Color>
+    <Color x:Key="FlyoutCardBackgroundColorDark">#252A3A</Color>
+    <Color x:Key="FlyoutTitleColorLight">#1A1D29</Color>
+    <Color x:Key="FlyoutTitleColorDark">#FFFFFF</Color>
+    <Color x:Key="FlyoutSubtitleColorLight">#6B7280</Color>
+    <Color x:Key="FlyoutSubtitleColorDark">#B0B8C8</Color>
 
     <!-- Brushes -->
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>

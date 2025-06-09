@@ -7,14 +7,14 @@
     xmlns:views="clr-namespace:LocalDropApp.Views"
     Shell.FlyoutBehavior="Flyout"
     Shell.FlyoutWidth="280"
-    Shell.FlyoutBackgroundColor="{StaticResource DarkNavy}"
+    Shell.FlyoutBackgroundColor="{DynamicResource FlyoutBackgroundColor}"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False"
     Title="LocalDropApp">
 
     <!-- Flyout Header -->
     <Shell.FlyoutHeader>
-        <Grid BackgroundColor="{StaticResource DarkNavy}" 
+        <Grid BackgroundColor="{DynamicResource FlyoutBackgroundColor}" 
               Padding="24,40,24,24" 
               RowDefinitions="Auto,Auto,Auto">
             
@@ -37,14 +37,14 @@
                    Text="Local Drop" 
                    FontSize="22" 
                    FontAttributes="Bold" 
-                   TextColor="{StaticResource TextOnDark}" 
+                   TextColor="{DynamicResource FlyoutTitleColor}" 
                    Margin="0,16,0,4" />
             
             <!-- App Subtitle -->
             <Label Grid.Row="2" 
                    Text="File Transfer Made Simple" 
                    FontSize="14" 
-                   TextColor="{StaticResource TextOnDarkSecondary}" />
+                   TextColor="{DynamicResource FlyoutSubtitleColor}" />
         </Grid>
     </Shell.FlyoutHeader>
 
@@ -75,14 +75,14 @@
 
     <!-- Flyout Footer -->
     <Shell.FlyoutFooter>
-        <Grid BackgroundColor="{StaticResource DarkNavy}" 
+        <Grid BackgroundColor="{DynamicResource FlyoutBackgroundColor}" 
               Padding="24,16,24,32"
               RowDefinitions="Auto,Auto"
               RowSpacing="12">
             
             <!-- Connection Status -->
             <Border Grid.Row="0"
-                    BackgroundColor="{StaticResource DarkNavyLight}"
+                    BackgroundColor="{DynamicResource FlyoutCardBackgroundColor}"
                     StrokeShape="RoundRectangle 8"
                     Padding="16,12">
                 <Grid ColumnDefinitions="Auto,*">
@@ -94,7 +94,7 @@
                     <Label Grid.Column="1"
                            Text="Connected"
                            FontSize="12"
-                           TextColor="{StaticResource TextOnDarkSecondary}"
+                           TextColor="{DynamicResource FlyoutSubtitleColor}"
                            Margin="8,0,0,0"
                            VerticalOptions="Center" />
                 </Grid>
@@ -105,8 +105,8 @@
                     x:Name="ThemeToggleButton"
                     Text="🌙 Dark Mode"
                     Clicked="OnThemeToggleClicked"
-                    BackgroundColor="{StaticResource DarkNavyLight}"
-                    TextColor="{StaticResource TextOnDark}"
+                    BackgroundColor="{DynamicResource FlyoutCardBackgroundColor}"
+                    TextColor="{DynamicResource FlyoutTitleColor}"
                     CornerRadius="8"
                     FontSize="14"
                     Padding="16,12"
@@ -117,18 +117,18 @@
     <!-- Custom Flyout Item Style -->
     <Shell.Resources>
         <Style TargetType="Shell">
-            <Setter Property="Shell.FlyoutBackgroundColor" Value="{StaticResource DarkNavy}" />
+            <Setter Property="Shell.FlyoutBackgroundColor" Value="{DynamicResource FlyoutBackgroundColor}" />
         </Style>
         
         <Style TargetType="FlyoutItem" ApplyToDerivedTypes="True">
-            <Setter Property="Shell.BackgroundColor" Value="{StaticResource DarkNavy}" />
-            <Setter Property="Shell.ForegroundColor" Value="{StaticResource TextOnDarkSecondary}" />
-            <Setter Property="Shell.TitleColor" Value="{StaticResource TextOnDarkSecondary}" />
-            <Setter Property="Shell.UnselectedColor" Value="{StaticResource TextOnDarkSecondary}" />
-            <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource DarkNavy}" />
-            <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource TextOnDark}" />
-            <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource TextOnDark}" />
-            <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource TextOnDarkSecondary}" />
+            <Setter Property="Shell.BackgroundColor" Value="{DynamicResource FlyoutBackgroundColor}" />
+            <Setter Property="Shell.ForegroundColor" Value="{DynamicResource FlyoutSubtitleColor}" />
+            <Setter Property="Shell.TitleColor" Value="{DynamicResource FlyoutTitleColor}" />
+            <Setter Property="Shell.UnselectedColor" Value="{DynamicResource FlyoutSubtitleColor}" />
+            <Setter Property="Shell.TabBarBackgroundColor" Value="{DynamicResource FlyoutBackgroundColor}" />
+            <Setter Property="Shell.TabBarForegroundColor" Value="{DynamicResource FlyoutTitleColor}" />
+            <Setter Property="Shell.TabBarTitleColor" Value="{DynamicResource FlyoutTitleColor}" />
+            <Setter Property="Shell.TabBarUnselectedColor" Value="{DynamicResource FlyoutSubtitleColor}" />
         </Style>
     </Shell.Resources>
 

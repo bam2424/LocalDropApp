@@ -14,6 +14,7 @@ namespace LocalDropApp.Services
             if (Application.Current != null)
             {
                 Application.Current.UserAppTheme = theme;
+                UpdateFlyoutColors();
             }
         }
 
@@ -32,6 +33,43 @@ namespace LocalDropApp.Services
         public string GetThemeIcon()
         {
             return IsDarkTheme ? "🌙" : "☀️";
+        }
+
+        private void UpdateFlyoutColors()
+        {
+            if (Application.Current?.Resources == null) return;
+
+            var resources = Application.Current.Resources;
+            var isDark = IsDarkTheme;
+
+            // Update flyout background color
+            if (resources.TryGetValue(isDark ? "FlyoutBackgroundColorDark" : "FlyoutBackgroundColorLight", out var bgColor))
+            {
+                resources["FlyoutBackgroundColor"] = bgColor;
+            }
+
+            // Update flyout card background color
+            if (resources.TryGetValue(isDark ? "FlyoutCardBackgroundColorDark" : "FlyoutCardBackgroundColorLight", out var cardBgColor))
+            {
+                resources["FlyoutCardBackgroundColor"] = cardBgColor;
+            }
+
+            // Update flyout title color
+            if (resources.TryGetValue(isDark ? "FlyoutTitleColorDark" : "FlyoutTitleColorLight", out var titleColor))
+            {
+                resources["FlyoutTitleColor"] = titleColor;
+            }
+
+            // Update flyout subtitle color
+            if (resources.TryGetValue(isDark ? "FlyoutSubtitleColorDark" : "FlyoutSubtitleColorLight", out var subtitleColor))
+            {
+                resources["FlyoutSubtitleColor"] = subtitleColor;
+            }
+        }
+
+        public void InitializeFlyoutColors()
+        {
+            UpdateFlyoutColors();
         }
     }
 }

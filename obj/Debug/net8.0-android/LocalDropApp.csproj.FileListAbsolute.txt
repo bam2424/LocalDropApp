@@ -1084,3 +1084,5 @@ C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-android\st
 C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-android\stamp\_GenerateJavaStubs.stamp
 C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-android\stamp\_GeneratePackageManagerJava.stamp
 C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-android\stamp\_ResolveLibraryProjectImports.stamp
+C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\bin\Debug\net8.0-android\LocalDropApp.aar
+C:\Users\Brandon\Desktop\CursorProjects\LocalDropApp\obj\Debug\net8.0-android\LocalDropApp.aar.cache

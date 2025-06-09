@@ -14,6 +14,8 @@
             <!-- Value Converters -->
             <converters:PercentageConverter x:Key="PercentageConverter" />
             <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
+            <converters:StringToBoolConverter x:Key="StringToBoolConverter" />
+            <converters:IntToHeightConverter x:Key="IntToHeightConverter" />
             <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
             <converters:EqualConverter x:Key="EqualConverter" />
             <converters:PathToFilenameConverter x:Key="PathToFilenameConverter" />

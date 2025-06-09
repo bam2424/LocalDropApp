@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LocalDropApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fd3313884d0801dc5073283b313c2533832bc9ec")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+32d13e59924ccbbf6bfd24d3c329ace1d9294074")]
 [assembly: System.Reflection.AssemblyProductAttribute("LocalDropApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LocalDropApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
