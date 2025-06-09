@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "67zjhbi8Qbs=",
+  "dgSpecHash": "vRcH7ZSe8Rs=",
   "success": true,
   "projectFilePath": "C:\\Users\\Brandon\\Desktop\\CursorProjects\\LocalDropApp\\LocalDropApp.csproj",
   "expectedPackageFiles": [
@@ -29,7 +29,6 @@
     "C:\\Users\\Brandon\\.nuget\\packages\\microsoft.maui.graphics\\8.0.100\\microsoft.maui.graphics.8.0.100.nupkg.sha512",
     "C:\\Users\\Brandon\\.nuget\\packages\\microsoft.maui.graphics.win2d.winui.desktop\\8.0.100\\microsoft.maui.graphics.win2d.winui.desktop.8.0.100.nupkg.sha512",
     "C:\\Users\\Brandon\\.nuget\\packages\\microsoft.maui.resizetizer\\8.0.100\\microsoft.maui.resizetizer.8.0.100.nupkg.sha512",
-    "C:\\Users\\Brandon\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.16\\microsoft.net.illink.tasks.8.0.16.nupkg.sha512",
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages\\microsoft.windows.sdk.buildtools\\10.0.22621.756\\microsoft.windows.sdk.buildtools.10.0.22621.756.nupkg.sha512",
     "C:\\Users\\Brandon\\.nuget\\packages\\microsoft.windowsappsdk\\1.5.240802000\\microsoft.windowsappsdk.1.5.240802000.nupkg.sha512",
     "C:\\Users\\Brandon\\.nuget\\packages\\system.speech\\8.0.0\\system.speech.8.0.0.nupkg.sha512",
