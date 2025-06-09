@@ -61,17 +61,15 @@ public class PeerDiscoveryService : IPeerDiscoveryService
             
             _isRunning = true;
             
-            // Send multiple discovery messages on startup for better reliability
             _ = Task.Run(async () =>
             {
                 for (int i = 0; i < 3; i++)
                 {
                     await SendDiscoveryMessage();
-                    await Task.Delay(500); // 500ms between discovery attempts
+                    await Task.Delay(500);
                 }
             });
             
-            // Debug logging
             DiscoveryError?.Invoke(this, $"DEBUG: Started discovery for {_localDeviceName} (ID: {_localDeviceId[..8]}...) on IP {_localIpAddress}, TCP port {_localTcpPort}");
         }
         catch (Exception ex)
@@ -103,11 +101,10 @@ public class PeerDiscoveryService : IPeerDiscoveryService
     {
         if (!_isRunning) return;
         
-        // Send multiple discovery messages for better reliability
         for (int i = 0; i < 3; i++)
         {
             await SendDiscoveryMessage();
-            if (i < 2) await Task.Delay(300); // Small delay between attempts
+            if (i < 2) await Task.Delay(300);
         }
     }
 
@@ -195,7 +192,6 @@ public class PeerDiscoveryService : IPeerDiscoveryService
             if (message == null)
                 return;
                 
-            // Debug: log all received messages
             DiscoveryError?.Invoke(this, $"DEBUG: Received message from {message.SenderName} (ID: {message.SenderId[..8]}...)");
             
             if (message.SenderId == _localDeviceId)

@@ -64,7 +64,7 @@ public class HistoryViewModel : INotifyPropertyChanged
         }
     }
 
-    // Button properties
+
     public Color RefreshButtonBackgroundColor => IsLoading ? Colors.Gray : Color.FromArgb("#512BD4");
 
     public int TotalTransfers
@@ -103,7 +103,7 @@ public class HistoryViewModel : INotifyPropertyChanged
         set { _totalTransferTime = value; OnPropertyChanged(); OnPropertyChanged(nameof(TotalTransferTimeFormatted)); }
     }
 
-    // Computed Properties
+
     public string TotalDataTransferredFormatted
     {
         get
@@ -165,7 +165,7 @@ public class HistoryViewModel : INotifyPropertyChanged
         "Last 90 Days"
     };
 
-    // Commands
+
     public ICommand RefreshCommand { get; }
     public ICommand ClearHistoryCommand { get; }
     public ICommand ExportHistoryCommand { get; }

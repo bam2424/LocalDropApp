@@ -70,18 +70,13 @@ public partial class MainViewModel : ObservableObject
     {
         var baseName = Environment.MachineName;
         
-        // Get all processes with the same name as the current process
         var currentProcessName = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
         var processes = System.Diagnostics.Process.GetProcessesByName(currentProcessName);
         
-        // If this is the first instance, use the base name
         if (processes.Length <= 1)
         {
             return baseName;
         }
-        
-        // Otherwise, use the base name + instance number
-        // We use the process ID to ensure consistent naming across runs
         var currentProcessId = System.Diagnostics.Process.GetCurrentProcess().Id;
         var sortedProcessIds = processes.Select(p => p.Id).OrderBy(id => id).ToArray();
         var instanceIndex = Array.IndexOf(sortedProcessIds, currentProcessId);
@@ -112,7 +107,6 @@ public partial class MainViewModel : ObservableObject
                 MainThread.BeginInvokeOnMainThread(() => StatusMessage = "Searching for peers...");
             }
             
-            // Keep discovery active for 5 seconds to make hourglass more visible
             await Task.Delay(5000);
             
             MainThread.BeginInvokeOnMainThread(() =>
@@ -227,7 +221,6 @@ public partial class MainViewModel : ObservableObject
         _fileTransferService.TransferError += OnTransferError;
         _fileTransferService.IncomingFileCompleted += OnIncomingFileCompleted;
 
-        // Start services with aggressive firewall prompt triggering
         _ = Task.Run(async () =>
         {
             try

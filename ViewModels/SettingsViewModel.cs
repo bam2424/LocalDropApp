@@ -61,7 +61,6 @@ public partial class SettingsViewModel : INotifyPropertyChanged
         }
     }
 
-    // Button text and color properties
     public string TestButtonText => IsTestingConnection ? "⏳ Testing..." : "🔍 Test";
     public Color TestButtonBackgroundColor => IsTestingConnection ? Colors.Gray : Color.FromArgb("#512BD4");
     
@@ -71,8 +70,8 @@ public partial class SettingsViewModel : INotifyPropertyChanged
         get 
         {
             if (IsSavingSettings) return Colors.Gray;
-            if (!HasUnsavedChanges) return Color.FromArgb("#2E7D32"); // Green when saved
-            return Color.FromArgb("#512BD4"); // Blue when there are changes to save
+            if (!HasUnsavedChanges) return Color.FromArgb("#2E7D32");
+            return Color.FromArgb("#512BD4");
         }
     }
 
@@ -82,8 +81,6 @@ public partial class SettingsViewModel : INotifyPropertyChanged
     public List<int> TimeoutOptions { get; } = new() { 10, 15, 30, 45, 60, 120 };
     public List<int> HistoryRetentionOptions { get; } = new() { 0, 7, 14, 30, 60, 90, 365 };
     public List<int> MaxFileSizeOptions { get; } = new() { 100, 500, 1024, 2048, 5120, 10240 };
-
-    // Commands
     public ICommand SaveSettingsCommand { get; }
     public ICommand ResetSettingsCommand { get; }
     public ICommand BrowseFolderCommand { get; }
@@ -112,13 +109,11 @@ public partial class SettingsViewModel : INotifyPropertyChanged
     {
         HasUnsavedChanges = true;
 
-        // Apply theme changes immediately
         if (e.PropertyName == nameof(AppSettings.PreferredTheme))
         {
             ApplyTheme();
         }
         
-        // Auto-save download path immediately for real-time use in file transfers
         if (e.PropertyName == nameof(AppSettings.DownloadPath))
         {
             Preferences.Set("DownloadPath", Settings.DownloadPath);
@@ -131,16 +126,12 @@ public partial class SettingsViewModel : INotifyPropertyChanged
 
         try
         {
-            // Validate settings
             if (!ValidateSettings())
             {
                 return;
             }
 
-            // In real implementation, save to preferences/database
-            await Task.Delay(500); // Simulate save operation
-
-            // Save to preferences - use instance-specific keys for testing
+            await Task.Delay(500);
             var instanceId = System.Diagnostics.Process.GetCurrentProcess().Id.ToString();
             Preferences.Set($"DeviceName_{instanceId}", Settings.DeviceName);
             Preferences.Set("DiscoveryPort", Settings.DiscoveryPort);
@@ -207,7 +198,6 @@ public partial class SettingsViewModel : INotifyPropertyChanged
     {
         try
         {
-            // For now, use a platform-agnostic approach with better user guidance
             bool useManualInput = await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert(
                 "Select Download Folder 📁",
                 "Would you like to manually type the folder path or browse for a file in the desired folder?",
@@ -216,7 +206,6 @@ public partial class SettingsViewModel : INotifyPropertyChanged
 
             if (useManualInput)
             {
-                // Let user type the path manually
                 string result = await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayPromptAsync(
                     "Enter Folder Path",
                     "Enter the full path to the folder where you want files to be downloaded:",
@@ -245,7 +234,6 @@ public partial class SettingsViewModel : INotifyPropertyChanged
             }
             else
             {
-                // Use file picker as workaround - improved guidance
                 var pickResult = await FilePicker.PickAsync(new PickOptions
                 {
                     PickerTitle = "📁 Navigate to your desired folder and select ANY file (or create a new text file)"
