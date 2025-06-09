@@ -16,9 +16,9 @@ A modern, intuitive file transfer application built with .NET MAUI that enables 
 
 ## 🖼️ Screenshots
 
-### Transfer Statistics & Analytics Dashboard
+### Transfer History & Analytics Dashboard
 ![Transfer Statistics](docs/images/transfer-statistics.png)
-*Advanced analytics dashboard showing 50 completed transfers, 12.2 GB transferred data, 82% success rate with real-time speed monitoring at 2.2 MB/s. Includes interactive charts for transfer activity over the last 30 days and comprehensive transfer history with detailed file information.*
+*Comprehensive transfer history interface showcasing the analytics dashboard with demo data. Features interactive charts for transfer activity visualization, detailed transfer records with file information, search and filtering capabilities, and export options for CSV/JSON formats.*
 
 ### Main Interface - Peer Discovery & File Transfer
 ![Main Interface](docs/images/main-interface.png)
@@ -27,6 +27,10 @@ A modern, intuitive file transfer application built with .NET MAUI that enables 
 ### Comprehensive Settings & Configuration
 ![Settings Page](docs/images/settings-page.png)
 *Complete settings panel with General Settings (device name, download path, theme selection), Network Settings (discovery/transfer ports, timeout configuration), Transfer Settings (auto-accept, concurrent transfers, file size limits), Security & Privacy options (encryption, compression), and Notifications & History management.*
+
+### Advanced Security & Privacy Controls
+![Security Settings](docs/images/security-settings.png)
+*Detailed security and privacy controls including transfer encryption options, file compression settings, notification preferences, file logging capabilities, history retention settings, and system startup configuration with network diagnostics tools.*
 
 
 ## 🚀 Getting Started
@@ -62,7 +66,7 @@ A modern, intuitive file transfer application built with .NET MAUI that enables 
 
 ### **Quick Setup**
 ```bash
-# Clone and run
+
 git clone https://github.com/bam2424/LocalDropApp.git
 cd LocalDropApp
 dotnet run --framework net8.0-windows10.0.19041.0
