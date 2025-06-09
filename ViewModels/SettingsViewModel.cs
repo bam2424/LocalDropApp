@@ -222,7 +222,7 @@ public partial class SettingsViewModel : INotifyPropertyChanged
                     "Enter the full path to the folder where you want files to be downloaded:",
                     "OK",
                     "Cancel",
-                    placeholder: @"C:\Users\YourName\Downloads");
+                    placeholder: Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "LocalDrop Downloads"));
 
                 if (!string.IsNullOrWhiteSpace(result))
                 {

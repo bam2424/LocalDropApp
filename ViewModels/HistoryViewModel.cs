@@ -647,7 +647,7 @@ public class HistoryViewModel : INotifyPropertyChanged
                 Status = random.Next(10) < 8 ? TransferStatus.Completed : TransferStatus.Failed, // 80% success rate
                 PeerName = peerNames[random.Next(peerNames.Length)],
                 PeerIpAddress = $"192.168.1.{random.Next(2, 254)}",
-                FilePath = Path.Combine(@"C:\Downloads\LocalDrop", fileName),
+                FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "LocalDrop Downloads", fileName),
                 Duration = duration,
                 TransferSpeed = speed,
                 ErrorMessage = random.Next(10) >= 8 ? "Network timeout occurred" : string.Empty
