@@ -18,6 +18,8 @@ LocalDropApp_Standalone/
 release/
 Published/
 Clean-Deploy/
+Instance1/
+Instance2/
 
 # Standalone executables (too large for git - use GitHub Releases)
 *.exe

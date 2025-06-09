@@ -260,40 +260,14 @@ public partial class MainViewModel : ObservableObject
 
     private async Task ForceFirewallPromptsAndStartServices()
     {
-        // Create temporary listeners to force Windows Firewall prompts
-        System.Net.Sockets.TcpListener? tempTcpListener = null;
-        System.Net.Sockets.UdpClient? tempUdpClient = null;
-        
         try
         {
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                StatusMessage = "Requesting network permissions...";
-            });
-            
-            // Create TCP listener on port 35732 - this will force Windows Firewall prompt
-            tempTcpListener = new System.Net.Sockets.TcpListener(System.Net.IPAddress.Any, 35732);
-            tempTcpListener.Start();
-            
-            // Create UDP client on port 35731 - this may trigger another firewall prompt
-            tempUdpClient = new System.Net.Sockets.UdpClient(35731);
-            
-            // Keep them alive for 3 seconds to ensure Windows Firewall prompts appear
-            await Task.Delay(3000);
-            
-            // Close temporary listeners
-            tempTcpListener.Stop();
-            tempUdpClient.Close();
-            
-            // Small delay to ensure ports are released
-            await Task.Delay(500);
-            
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 StatusMessage = "Starting file transfer service...";
             });
             
-            // Now start the actual services with detailed diagnostics
+            // Start the actual services with automatic port allocation
             try
             {
                 await _fileTransferService.StartListeningAsync();
@@ -339,9 +313,6 @@ public partial class MainViewModel : ObservableObject
         }
         catch (Exception ex)
         {
-            // Clean up in case of error
-            tempTcpListener?.Stop();
-            tempUdpClient?.Close();
             throw new Exception($"Network setup failed: {ex.Message}. Windows Firewall may be blocking the app.");
         }
     }

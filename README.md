@@ -1,122 +1,79 @@
-# 📡 Local Drop - AirDrop Clone
+# 📡 LocalDropApp - Cross-Platform File Transfer
 
-A cross-platform file sharing application built with .NET MAUI that enables seamless file transfers between devices on the same local network.
+> **AirDrop-style file sharing for Windows, Android, and iOS**
 
-## 🎯 Project Overview
+A modern, intuitive file transfer application built with .NET MAUI that enables seamless peer-to-peer file sharing across devices on your local network.
 
-Local Drop is a modern, intuitive file sharing application that mimics AirDrop functionality for Windows, Android, and iOS devices. It uses UDP for peer discovery and TCP for reliable file transfers, all wrapped in a beautiful, responsive user interface.
 
 ## ✨ Features
 
-### 🎨 **Phase 1: Complete UI Implementation** ✅
-- **Modern Interface**: Clean, card-based design with professional color scheme
-- **Peer Discovery**: Real-time peer list with online/offline status indicators
-- **File Selection**: Drag-and-drop area with multi-file selection support
-- **Transfer Monitoring**: Live progress bars with speed and time estimates
-- **Transfer History**: Complete log of all file transfer activities
-- **Responsive Design**: Optimized for different screen sizes and orientations
+- **📱 Cross-Platform**: Windows, Android, and iOS support
+- **🔍 Auto-Discovery**: Automatic peer detection on local networks
+- **📁 Multi-File Transfer**: Send multiple files simultaneously
+- **📊 Real-Time Progress**: Live transfer monitoring with speed indicators
+- **📈 Transfer Analytics**: Comprehensive history with statistics and trends
+- **🎨 Modern UI**: Beautiful, responsive interface with dark/light themes
 
-### 🔧 **Phase 2: Core Networking** (Coming Next)
-- **UDP Peer Discovery**: Automatic device discovery on local network
-- **TCP File Transfer**: Reliable, chunked file streaming
-- **Progress Tracking**: Real-time transfer progress and speed monitoring
-- **Error Handling**: Robust connection management and recovery
+## 🖼️ Screenshots
 
-## 🏗️ Architecture
+### Transfer Statistics & Analytics Dashboard
+![Transfer Statistics](docs/images/transfer-statistics.png)
+*Advanced analytics dashboard showing 50 completed transfers, 12.2 GB transferred data, 82% success rate with real-time speed monitoring at 2.2 MB/s. Includes interactive charts for transfer activity over the last 30 days and comprehensive transfer history with detailed file information.*
 
-### **MVVM Pattern**
-- **Models**: `PeerDevice`, `FileTransfer` with INotifyPropertyChanged
-- **ViewModels**: `MainViewModel` with CommunityToolkit.Mvvm
-- **Views**: Modern XAML with data binding and converters
+### Main Interface - Peer Discovery & File Transfer
+![Main Interface](docs/images/main-interface.png)
+*Clean, intuitive main interface featuring Quick Actions for peer discovery and file selection. Shows real-time device discovery status with "Available Devices" section and drag-and-drop file transfer area supporting multiple files and folders.*
+
+### Comprehensive Settings & Configuration
+![Settings Page](docs/images/settings-page.png)
+*Complete settings panel with General Settings (device name, download path, theme selection), Network Settings (discovery/transfer ports, timeout configuration), Transfer Settings (auto-accept, concurrent transfers, file size limits), Security & Privacy options (encryption, compression), and Notifications & History management.*
+
+
+## 🚀 Getting Started
+
+### **How to Use**
+1. **Start Discovery**: Click "Start Discovery" to find nearby devices
+2. **Select Files**: Use "Select Files" button or drag & drop files
+3. **Choose Target**: Select a discovered peer device
+4. **Send Files**: Click "Send Files" to start the transfer
+5. **Monitor Progress**: Watch real-time progress in the transfer section
+
+## 🔧 Technical Specifications
+
+### **Network Features**
+- **UDP Peer Discovery**: Automatic device detection on local networks
+- **TCP File Transfer**: Reliable, chunked streaming for large files
+- **SHA-256 Verification**: Ensures file integrity during transfers
+- **Max File Size**: 10GB per file
+- **Multiple Transfers**: Send multiple files simultaneously
+
+### **Platform Support**
+| Platform | Status | 
+|----------|--------|
+| ✅ **Windows 10/11** | Fully Working |
+| ✅ **Android** | Fully Working |
+| 🔄 **iOS** | In Progress |
+
+## 🛠️ For Developers
+
+### **Requirements**
+- Visual Studio 2022 (v17.8+)
+- .NET 8.0 SDK
+
+### **Quick Setup**
+```bash
+# Clone and run
+git clone https://github.com/bam2424/LocalDropApp.git
+cd LocalDropApp
+dotnet run --framework net8.0-windows10.0.19041.0
+```
 
 ### **Project Structure**
 ```
 LocalDropApp/
-├── Models/              # Data models
-├── ViewModels/          # MVVM view models  
-├── Views/               # XAML pages
-├── Services/            # Core services (coming in Phase 2)
-├── Converters/          # Value converters for UI binding
-└── Resources/           # Styles, colors, and assets
+├── 📁 Models/           # Data models
+├── 📁 ViewModels/       # MVVM view models
+├── 📁 Views/            # XAML pages
+├── 📁 Services/         # Networking services
+└── 📁 Resources/        # Styles and assets
 ```
-
-## 🚀 Getting Started
-
-### **Prerequisites**
-- Visual Studio 2022 (17.8 or later)
-- .NET 8.0 SDK
-- Windows 10/11 for Windows development
-- Xcode for iOS development (macOS)
-- Android SDK for Android development
-
-### **Building Standalone Executable**
-
-1. **Download and Extract**
-   - Download the source code
-   - Extract to a folder
-
-2. **Build Distribution Version**
-   - Double-click `BuildLocalDropApp.exe`
-   - Wait for the build to complete
-   - Find the ready-to-distribute executable in `./release/LocalDropApp.exe`
-
-3. **Development in Visual Studio**
-   - Open `LocalDropApp.sln` in Visual Studio 2022
-   - Select target platform (Windows Machine, Android, iOS)
-   - Press `F5` to run with mock data
-
-### **Available Commands**
-```bash
-# Build the project
-dotnet build
-
-# Run on specific platform
-dotnet run --framework net8.0-windows10.0.19041.0
-```
-
-## 🎮 Demo Features
-
-The current UI implementation includes:
-
-### **📱 Interactive Elements**
-- **Discover Button**: Simulates finding new peers on the network
-- **Select Files**: Mock file picker with pre-selected demo files
-- **Send Files**: Initiates simulated file transfer with progress bars
-- **Clear History**: Removes completed transfers from history
-- **Refresh Peers**: Re-scans for available devices
-
-### **📊 Real-time Updates**
-- Live progress bars during transfers
-- Status indicators (Online/Offline) for peers
-- Transfer speed and time remaining estimates
-- Visual feedback for all user interactions
-
-## 🛠️ Technical Details
-
-### **Dependencies**
-- **.NET MAUI**: Cross-platform UI framework
-- **CommunityToolkit.Mvvm**: MVVM helpers and source generators
-- **CommunityToolkit.Maui**: Enhanced UI controls and behaviors
-
-### **Key Components**
-
-**PeerDevice Model**
-```csharp
-public class PeerDevice : INotifyPropertyChanged
-{
-    public string Name { get; set; }
-    public string IpAddress { get; set; }
-    public bool IsOnline { get; set; }
-    public DateTime LastSeen { get; set; }
-}
-```
-
-**FileTransfer Model**
-```csharp
-public class FileTransfer : INotifyPropertyChanged
-{
-    public string FileName { get; set; }
-    public long FileSize { get; set; }
-    public TransferStatus Status { get; set; }
-    public double ProgressPercentage { get; set; }
-}
