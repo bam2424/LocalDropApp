@@ -16,13 +16,13 @@ A modern, intuitive file transfer application built with .NET MAUI that enables 
 
 ## 🖼️ Screenshots
 
-### Transfer History & Analytics Dashboard
-![Transfer Statistics](docs/images/transfer-statistics.png)
-*Comprehensive transfer history interface showcasing the analytics dashboard with demo data. Features interactive charts for transfer activity visualization, detailed transfer records with file information, search and filtering capabilities, and export options for CSV/JSON formats.*
-
 ### Main Interface - Peer Discovery & File Transfer
 ![Main Interface](docs/images/main-interface.png)
 *Clean, intuitive main interface featuring Quick Actions for peer discovery and file selection. Shows real-time device discovery status with "Available Devices" section and drag-and-drop file transfer area supporting multiple files and folders.*
+
+### Transfer History & Analytics Dashboard
+![Transfer Statistics](docs/images/transfer-statistics.png)
+*Comprehensive transfer history interface showcasing the analytics dashboard with demo data. Features interactive charts for transfer activity visualization, detailed transfer records with file information, search and filtering capabilities, and export options for CSV/JSON formats.*
 
 ### Comprehensive Settings & Configuration
 ![Settings Page](docs/images/settings-page.png)
