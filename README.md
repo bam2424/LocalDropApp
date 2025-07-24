@@ -7,12 +7,12 @@ A modern, intuitive file transfer application built with .NET MAUI that enables 
 
 ##  Features
 
-- ** Cross-Platform**: Windows, Android, and iOS support
-- ** Auto-Discovery**: Automatic peer detection on local networks
-- ** Multi-File Transfer**: Send multiple files simultaneously
-- ** Real-Time Progress**: Live transfer monitoring with speed indicators
+- **Cross-Platform**: Windows, Android, and iOS support
+- **Auto-Discovery**: Automatic peer detection on local networks
+- **Multi-File Transfer**: Send multiple files simultaneously
+- **Real-Time Progress**: Live transfer monitoring with speed indicators
 - **Transfer Analytics**: Comprehensive history with statistics and trends
-- ** Modern UI**: Beautiful, responsive interface with dark/light themes
+- **Modern UI**: Beautiful, responsive interface with dark/light themes
 
 ##  Screenshots
 
