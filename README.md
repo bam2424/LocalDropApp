@@ -42,7 +42,7 @@ A modern, intuitive file transfer application built with .NET MAUI that enables 
 4. **Send Files**: Click "Send Files" to start the transfer
 5. **Monitor Progress**: Watch real-time progress in the transfer section
 
-## 🔧 Technical Specifications
+## Technical Specifications
 
 ### **Network Features**
 - **UDP Peer Discovery**: Automatic device detection on local networks
