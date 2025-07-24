@@ -1,20 +1,20 @@
-# 📡 LocalDropApp - Cross-Platform File Transfer
+#   LocalDropApp - Cross-Platform File Transfer
 
 > **AirDrop-style file sharing for Windows, Android, and iOS**
 
 A modern, intuitive file transfer application built with .NET MAUI that enables seamless peer-to-peer file sharing across devices on your local network.
 
 
-## ✨ Features
+##  Features
 
-- **📱 Cross-Platform**: Windows, Android, and iOS support
-- **🔍 Auto-Discovery**: Automatic peer detection on local networks
-- **📁 Multi-File Transfer**: Send multiple files simultaneously
-- **📊 Real-Time Progress**: Live transfer monitoring with speed indicators
-- **📈 Transfer Analytics**: Comprehensive history with statistics and trends
-- **🎨 Modern UI**: Beautiful, responsive interface with dark/light themes
+- ** Cross-Platform**: Windows, Android, and iOS support
+- ** Auto-Discovery**: Automatic peer detection on local networks
+- ** Multi-File Transfer**: Send multiple files simultaneously
+- ** Real-Time Progress**: Live transfer monitoring with speed indicators
+- **Transfer Analytics**: Comprehensive history with statistics and trends
+- ** Modern UI**: Beautiful, responsive interface with dark/light themes
 
-## 🖼️ Screenshots
+##  Screenshots
 
 ### Main Interface - Peer Discovery & File Transfer
 ![Main Interface](docs/images/main-interface.png)
@@ -33,7 +33,7 @@ A modern, intuitive file transfer application built with .NET MAUI that enables 
 *Detailed security and privacy controls including transfer encryption options, file compression settings, notification preferences, file logging capabilities, history retention settings, and system startup configuration with network diagnostics tools.*
 
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### **How to Use**
 1. **Start Discovery**: Click "Start Discovery" to find nearby devices
@@ -58,7 +58,7 @@ A modern, intuitive file transfer application built with .NET MAUI that enables 
 | ✅ **Android** | Fully Working |
 | 🔄 **iOS** | In Progress |
 
-## 🛠️ For Developers
+##  For Developers
 
 ### **Requirements**
 - Visual Studio 2022 (v17.8+)
